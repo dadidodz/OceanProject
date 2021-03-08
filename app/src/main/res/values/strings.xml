@@ -6,4 +6,5 @@
     <string name="boutonrtn">Retour</string>
     <string name="texteFavoris">Retrouvez ici tous vos favoris pour y accéder plus rapidement !</string>
     <string name="titremap" translatable="false">AIzaSyB_qsP8AOP_P0MdlPz-48TDaJYjTP3vbjo</string>
+    <string name="infosmenu">Informations</string>
 </resources>
