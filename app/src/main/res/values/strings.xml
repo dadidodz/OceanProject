@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">OceanProtect</string>
+    <string name="menuinfo">Ajout</string>
+    <string name="quitmenu">Quitter</string>
 </resources>
