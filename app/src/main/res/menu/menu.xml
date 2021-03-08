@@ -2,12 +2,12 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/favori"
+        android:id="@+id/recherche"
         android:icon="@android:drawable/ic_search_category_default"
         android:title="@string/menuinfo"
         app:showAsAction="always" />
     <item
-        android:id="@+id/recherche"
+        android:id="@+id/favori"
         android:icon="@android:drawable/btn_star_big_on"
         android:title="@string/menuinfo"
         app:showAsAction="always" />
