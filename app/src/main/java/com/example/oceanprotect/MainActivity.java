@@ -40,7 +40,6 @@ public class MainActivity extends AppCompatActivity {
                 //Toast.makeText(MainActivity.this, "bonjour", Toast.LENGTH_SHORT).show();
 
                 startActivity(intent);
-
                 break;
             case R.id.quitmenu:
                 System.exit(0) ;

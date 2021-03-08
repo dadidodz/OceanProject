@@ -3,4 +3,6 @@
     <string name="menuinfo">Ajout</string>
     <string name="quitmenu">Quitter</string>
     <string name="titleFenetre">Mes Favoris</string>
+    <string name="boutonrtn">Retour</string>
+    <string name="texteFavoris">Retrouvez ici tous vos favoris pour y accéder plus rapidement !</string>
 </resources>
