@@ -16,17 +16,43 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements SearchView.OnQueryTextListener {
 
     // Declare Variables
     ListView list;
+    ListViewAdapter adapter;
     SearchView editsearch;
-    String[] animalNameList;
+    String[] nomsLieuxListe;
+    ArrayList<NomsLieux> arraylist = new ArrayList<NomsLieux>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        // Generate sample data
+
+        nomsLieuxListe = new String[]{"Paris", "Toulouse", "Bordeaux",
+                "Atlantique", "Lacanau"};
+
+        // Locate the ListView in listview_main.xml
+        list = (ListView) findViewById(R.id.listview);
+
+        for (int i = 0; i < nomsLieuxListe.length; i++) {
+            NomsLieux nomsLieux = new NomsLieux(nomsLieuxListe[i]);
+            // Binds all strings into an array
+            arraylist.add(nomsLieux);
+        }
+
+        // Pass results to ListViewAdapter Class
+        adapter = new ListViewAdapter(this, arraylist);
+
+        // Binds the Adapter to the ListView
+        list.setAdapter(adapter);
+
+        // Locate the EditText in listview_main.xml
+        editsearch = (SearchView) findViewById(R.id.search);
+        editsearch.setOnQueryTextListener(this);
 
         Button btn = (Button)findViewById(R.id.button);
 
@@ -36,6 +62,19 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(new Intent(MainActivity.this, Map.class));
             }
         });
+    }
+
+    @Override
+    public boolean onQueryTextSubmit(String query) {
+
+        return false;
+    }
+
+    @Override
+    public boolean onQueryTextChange(String newText) {
+        String text = newText;
+        adapter.filter(text);
+        return false;
     }
 
     @Override
@@ -69,6 +108,8 @@ public class MainActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+
+
 
 
 }
