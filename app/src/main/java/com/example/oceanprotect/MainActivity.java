@@ -1,9 +1,11 @@
 package com.example.oceanprotect;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -19,17 +21,21 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity implements SearchView.OnQueryTextListener {
 
     // Declare Variables
+    Database myDb;
     ListView list;
     ListViewAdapter adapter;
     SearchView editsearch;
     String[] nomsLieuxListe;
     ArrayList<NomsLieux> arraylist = new ArrayList<NomsLieux>();
+    Button btnviewAll;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        btnviewAll = (Button) findViewById(R.id.buttonview);
+        viewAll();
         // Generate sample data
 
         nomsLieuxListe = new String[]{"Paris", "Toulouse", "Bordeaux",
@@ -62,6 +68,45 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
                 startActivity(new Intent(MainActivity.this, Map.class));
             }
         });
+
+        myDb = new Database(this);
+
+    }
+
+    public void viewAll() {
+        btnviewAll.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Cursor res = myDb.getAllData();
+                        if(res.getCount() == 0) {
+                            // voir les messages
+                            showMessage("Error", "Aucune data");
+                            return;
+                        }
+
+                        StringBuffer buffer = new StringBuffer();
+                        while(res.moveToNext()) {
+                            buffer.append("ID :" + res.getString(0) + "\n");
+                            buffer.append("Name :" + res.getString(1) + "\n");
+                            buffer.append("Description :" + res.getString(2) + "\n");
+                            buffer.append("Information :" + res.getString(3) + "\n");
+                        }
+
+                        //Voir toutes les datas
+                        showMessage("Data", buffer.toString());
+
+                    }
+                }
+        );
+    }
+
+    public void showMessage (String title, String message) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setCancelable(true);
+        builder.setTitle(title);
+        builder.setMessage(message);
+        builder.show();
     }
 
     @Override
