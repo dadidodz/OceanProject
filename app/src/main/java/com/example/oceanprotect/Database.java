@@ -1,5 +1,6 @@
 package com.example.oceanprotect;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -34,6 +35,14 @@ public class Database extends SQLiteOpenHelper {
 
     public Cursor getAllData() {
         SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put("ID", 1);
+        values.put("NAME", "LeNom");
+        values.put("DESCRIPTION", "LaDesc");
+        values.put("INFORMATION", "LesInfos");
+
+        db.insert("ocean_table", null, values);
+
         Cursor res = db.rawQuery("SELECT * FROM " + TABLE_NAME, null);
         return res;
     }
