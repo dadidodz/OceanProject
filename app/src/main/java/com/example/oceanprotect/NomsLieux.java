@@ -3,8 +3,8 @@ package com.example.oceanprotect;
 public class NomsLieux {
     private String nomsLieux;
 
-    public NomsLieux(String animalName) {
-        this.nomsLieux = animalName;
+    public NomsLieux(String nomsLieux) {
+        this.nomsLieux = nomsLieux;
     }
 
 

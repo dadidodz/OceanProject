@@ -16,6 +16,7 @@ public class Database extends SQLiteOpenHelper {
     public static final String COL_2 = "NAME";
     public static final String COL_3 = "DESCRIPTION";
     public static final String COL_4 = "INFORMATION";
+    private SQLiteOpenHelper DBHelper;
 
     public Database(Context context) {
         super(context, DATABASE_NAME, null, 1);
@@ -35,15 +36,23 @@ public class Database extends SQLiteOpenHelper {
 
     public Cursor getAllData() {
         SQLiteDatabase db = this.getWritableDatabase();
-        ContentValues values = new ContentValues();
-        values.put("ID", 1);
-        values.put("NAME", "LeNom");
-        values.put("DESCRIPTION", "LaDesc");
-        values.put("INFORMATION", "LesInfos");
-
-        db.insert("ocean_table", null, values);
-
         Cursor res = db.rawQuery("SELECT * FROM " + TABLE_NAME, null);
         return res;
+    }
+
+
+    private static final String SQL_CATEGORY_NAME =
+            "SELECT " + COL_2 + "FROM " + TABLE_NAME;
+
+    public String getCategoryName(int i)
+    {
+        Cursor cursor = null;
+        try {
+            SQLiteDatabase database = DBHelper.getWritableDatabase();
+            cursor = database.rawQuery(SQL_CATEGORY_NAME , new String[] { Integer.toString(i) } );
+            return (cursor.moveToFirst()) ? cursor.getString(0) : null;
+        } finally {
+            if (cursor != null) cursor.close();
+        }
     }
 }

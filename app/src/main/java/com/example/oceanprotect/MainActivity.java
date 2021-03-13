@@ -6,17 +6,23 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.RadioButton;
 import android.widget.SearchView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.UUID;
 
 public class MainActivity extends AppCompatActivity implements SearchView.OnQueryTextListener {
 
@@ -28,21 +34,70 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
     String[] nomsLieuxListe;
     ArrayList<NomsLieux> arraylist = new ArrayList<NomsLieux>();
     Button btnviewAll;
+    private SQLiteOpenHelper DBHelper;
+
+    public void onRadioButtonClicked(View view) {
+        // Is the button now checked?
+        boolean checked = ((RadioButton) view).isChecked();
+
+        // Check which radio button was clicked
+        switch(view.getId()) {
+            case R.id.radioButton1:
+                if (checked){
+                    this.nomsLieuxListe = new String[]{"Paris", "Brest", "Toulouse", "Bordeaux",
+                            "Atlantique", "Lacanau", "Grau-Du-Roi", "Tours", "Lyon", "Grenoble",
+                            "Ajaccio"};
+                    this.arraylist.clear();
+                    for (int i = 0; i < this.nomsLieuxListe.length; i++) {
+                        NomsLieux nomsLieux = new NomsLieux(nomsLieuxListe[i]);
+                        // Binds all strings into an array
+
+                        this.arraylist.add(nomsLieux);
+                    }
+                    this.adapter.notifyDataSetChanged();
+                }
+                break;
+            case R.id.radioButton2:
+                if (checked) {
+                    this.nomsLieuxListe = new String[]{"Paris", "Brest", "Toulouse", "Bordeaux",
+                            "Atlantique", "Lacanau", "Grau-Du-Roi", "Nîmes"};
+                    this.arraylist.clear();
+                    for (int i = 0; i < this.nomsLieuxListe.length; i++) {
+                        NomsLieux nomsLieux = new NomsLieux(nomsLieuxListe[i]);
+                        // Binds all strings into an array
+
+                        this.arraylist.add(nomsLieux);
+                    }
+
+                    this.adapter.notifyDataSetChanged();
+                }
+                break;
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        btnviewAll = (Button) findViewById(R.id.buttonview);
+        this.btnviewAll = (Button) findViewById(R.id.buttonview);
         viewAll();
         // Generate sample data
 
-        nomsLieuxListe = new String[]{"Paris", "Toulouse", "Bordeaux",
-                "Atlantique", "Lacanau"};
+        this.nomsLieuxListe = new String[]{"Paris", "Brest", "Toulouse", "Bordeaux",
+                "Atlantique", "Lacanau", "Grau-Du-Roi", "Tours", "Lyon", "Grenoble",
+                "Ajaccio"};
+        /*
+        int i = 0;
+        while (res.movetonext()){
+            this.nomsLieuxListe[i] = requete SQL "SELECT NAME FROM TABLE_NAME";
+            i++;
+        }
 
-        // Locate the ListView in listview_main.xml
-        list = (ListView) findViewById(R.id.listview);
+         */
+
+    // Locate the ListView in listview_main.xml
+        this.list = (ListView) findViewById(R.id.listview);
 
         for (int i = 0; i < nomsLieuxListe.length; i++) {
             NomsLieux nomsLieux = new NomsLieux(nomsLieuxListe[i]);
@@ -51,14 +106,14 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         }
 
         // Pass results to ListViewAdapter Class
-        adapter = new ListViewAdapter(this, arraylist);
+        this.adapter = new ListViewAdapter(this, arraylist);
 
         // Binds the Adapter to the ListView
-        list.setAdapter(adapter);
+        this.list.setAdapter(this.adapter);
 
         // Locate the EditText in listview_main.xml
-        editsearch = (SearchView) findViewById(R.id.search);
-        editsearch.setOnQueryTextListener(this);
+        this.editsearch = (SearchView) findViewById(R.id.search);
+        this.editsearch.setOnQueryTextListener(this);
 
         Button btn = (Button)findViewById(R.id.button);
 
@@ -66,10 +121,13 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(MainActivity.this, Map.class));
+
+                onRadioButtonClicked(v);
+
             }
         });
 
-        myDb = new Database(this);
+        this.myDb = new Database(this);
 
     }
 
@@ -153,6 +211,11 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         }
         return super.onOptionsItemSelected(item);
     }
+
+
+
+
+
 
 
 
