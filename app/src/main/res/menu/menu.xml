@@ -7,7 +7,7 @@
         android:title="@string/menuinfo"
         app:showAsAction="always" />
     <item
-        android:id="@+id/Infos"
+        android:id="@+id/infos"
         android:title="@string/infosmenu"
         app:showAsAction="withText" />
     <item
