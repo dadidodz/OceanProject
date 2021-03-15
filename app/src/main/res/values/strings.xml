@@ -7,4 +7,9 @@
     <string name="texteFavoris">Retrouvez ici tous vos favoris pour y accéder plus rapidement !</string>
     <string name="titremap" translatable="false">AIzaSyB_qsP8AOP_P0MdlPz-48TDaJYjTP3vbjo</string>
     <string name="infosmenu">Informations</string>
+    <string name="radbtntout">Tout</string>
+    <string name="radbtnmer">Mer</string>
+    <string name="radbtnocean">Océan</string>
+    <string name="btngmap">Google Maps</string>
+    <string name="btntable">Voir la table</string>
 </resources>

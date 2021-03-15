@@ -6,10 +6,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -18,11 +16,8 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.SearchView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.UUID;
 
 public class MainActivity extends AppCompatActivity implements SearchView.OnQueryTextListener {
 
@@ -42,11 +37,13 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
 
         // Check which radio button was clicked
         switch(view.getId()) {
-            case R.id.radioButton1:
+            case R.id.radioButtonTout:
                 if (checked){
-                    this.nomsLieuxListe = new String[]{"Paris", "Brest", "Toulouse", "Bordeaux",
-                            "Atlantique", "Lacanau", "Grau-Du-Roi", "Tours", "Lyon", "Grenoble",
-                            "Ajaccio"};
+                    this.nomsLieuxListe = new String[]{"Bayonne", "La Rochelle", "Lorient", "Biarritz",
+                            "Brest", "Anglet", "Saint-Nazaire", "Vannes", "Rochefort", "Lanester", "Morlaix", "Les Sables-d'Olonne", "Tarnos",
+                            "Boucau", "Saint-Jean-de-Luz", "Bidart", "Larmor-Plage", "Ploemeur", "Quéven", "Auray", "Le Relecq-Kerhuon", "Guipavas", "Séné", "Aytré", "Concarneau",
+                            "La Baule-Escoublac", "Plouzané", "Plougastel-Daoulas", "Royan", "Pont-l'Abbé", "Angoulins", "Locmiquélic", "Landerneau", "L'Houmeau", "Labenne", "Riantec",
+                            "Cassis","Bonifacio","Honfleur","Villefranche sur mer","Camaret sur mer", "Le Grau-du-Roi", "La Grande Motte"};
                     this.arraylist.clear();
                     for (int i = 0; i < this.nomsLieuxListe.length; i++) {
                         NomsLieux nomsLieux = new NomsLieux(nomsLieuxListe[i]);
@@ -54,13 +51,31 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
 
                         this.arraylist.add(nomsLieux);
                     }
+
                     this.adapter.notifyDataSetChanged();
                 }
                 break;
-            case R.id.radioButton2:
+            case R.id.radioButtonMer:
                 if (checked) {
-                    this.nomsLieuxListe = new String[]{"Paris", "Brest", "Toulouse", "Bordeaux",
-                            "Atlantique", "Lacanau", "Grau-Du-Roi", "Nîmes"};
+                    this.nomsLieuxListe = new String[]{"Cassis","Bonifacio","Honfleur","Villefranche sur mer","Camaret sur mer", "Le Grau-du-Roi", "La Grande Motte"
+                    };
+                    this.arraylist.clear();
+                    for (int i = 0; i < this.nomsLieuxListe.length; i++) {
+                        NomsLieux nomsLieux = new NomsLieux(nomsLieuxListe[i]);
+                        // Binds all strings into an array
+
+                        this.arraylist.add(nomsLieux);
+                    }
+
+                    this.adapter.notifyDataSetChanged();
+                }
+                break;
+            case R.id.radioButtonOcean:
+                if (checked) {
+                    this.nomsLieuxListe = new String[]{"Bayonne", "La Rochelle", "Lorient", "Biarritz",
+                            "Brest", "Anglet", "Saint-Nazaire", "Vannes", "Rochefort", "Lanester", "Morlaix", "Les Sables-d'Olonne", "Tarnos",
+                            "Boucau", "Saint-Jean-de-Luz", "Bidart", "Larmor-Plage", "Ploemeur", "Quéven", "Auray", "Le Relecq-Kerhuon", "Guipavas", "Séné", "Aytré", "Concarneau",
+                            "La Baule-Escoublac", "Plouzané", "Plougastel-Daoulas", "Royan", "Pont-l'Abbé", "Angoulins", "Locmiquélic", "Landerneau", "L'Houmeau", "Labenne", "Riantec"};
                     this.arraylist.clear();
                     for (int i = 0; i < this.nomsLieuxListe.length; i++) {
                         NomsLieux nomsLieux = new NomsLieux(nomsLieuxListe[i]);
@@ -80,13 +95,15 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        this.btnviewAll = (Button) findViewById(R.id.buttonview);
+        this.btnviewAll = (Button) findViewById(R.id.buttonviewtable);
         viewAll();
         // Generate sample data
 
-        this.nomsLieuxListe = new String[]{"Paris", "Brest", "Toulouse", "Bordeaux",
-                "Atlantique", "Lacanau", "Grau-Du-Roi", "Tours", "Lyon", "Grenoble",
-                "Ajaccio"};
+        this.nomsLieuxListe = new String[]{"Bayonne", "La Rochelle", "Lorient", "Biarritz",
+                "Brest", "Anglet", "Saint-Nazaire", "Vannes", "Rochefort", "Lanester", "Morlaix", "Les Sables-d'Olonne", "Tarnos",
+                "Boucau", "Saint-Jean-de-Luz", "Bidart", "Larmor-Plage", "Ploemeur", "Quéven", "Auray", "Le Relecq-Kerhuon", "Guipavas", "Séné", "Aytré", "Concarneau",
+                "La Baule-Escoublac", "Plouzané", "Plougastel-Daoulas", "Royan", "Pont-l'Abbé", "Angoulins", "Locmiquélic", "Landerneau", "L'Houmeau", "Labenne", "Riantec",
+                "Cassis","Bonifacio","Honfleur","Villefranche sur mer","Camaret sur mer", "Le Grau-du-Roi", "La Grande Motte"};
         /*
         int i = 0;
         while (res.movetonext()){
@@ -115,15 +132,12 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         this.editsearch = (SearchView) findViewById(R.id.search);
         this.editsearch.setOnQueryTextListener(this);
 
-        Button btn = (Button)findViewById(R.id.button);
+        Button btn = (Button)findViewById(R.id.buttongmap);
 
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(MainActivity.this, Map.class));
-
-                onRadioButtonClicked(v);
-
             }
         });
 
