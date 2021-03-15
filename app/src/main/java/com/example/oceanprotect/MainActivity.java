@@ -19,6 +19,7 @@ import android.widget.RadioButton;
 import android.widget.SearchView;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class MainActivity extends AppCompatActivity implements SearchView.OnQueryTextListener {
 
@@ -27,11 +28,27 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
     ListView list;
     ListViewAdapter adapter;
     SearchView editsearch;
-    String[] nomsLieuxListe;
+    String[] nomsLieuxTab;
     ArrayList<NomsLieux> arraylist = new ArrayList<NomsLieux>();
     Button btnviewAll;
     private SQLiteOpenHelper DBHelper;
 
+    public void trierOrdreAlphaNomsLieuxTab() {
+        int tailletableau=nomsLieuxTab.length;
+        String tmp;
+        for (int i=0; i < tailletableau; i++)
+        {
+            for (int j=i+1; j < tailletableau; j++)
+            {
+                if (nomsLieuxTab[i].compareTo(nomsLieuxTab[j]) > 0)
+                {
+                    tmp = nomsLieuxTab[i];
+                    nomsLieuxTab[i] = nomsLieuxTab[j];
+                    nomsLieuxTab[j] = tmp;
+                }
+            }
+        }
+    }
     public void onRadioButtonClicked(View view) {
         // Is the button now checked?
         boolean checked = ((RadioButton) view).isChecked();
@@ -40,14 +57,15 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         switch(view.getId()) {
             case R.id.radioButtonTout:
                 if (checked){
-                    this.nomsLieuxListe = new String[]{"Bayonne", "La Rochelle", "Lorient", "Biarritz",
+                    this.nomsLieuxTab = new String[]{"Bayonne", "La Rochelle", "Lorient", "Biarritz",
                             "Brest", "Anglet", "Saint-Nazaire", "Vannes", "Rochefort", "Lanester", "Morlaix", "Les Sables-d'Olonne", "Tarnos",
                             "Boucau", "Saint-Jean-de-Luz", "Bidart", "Larmor-Plage", "Ploemeur", "Quéven", "Auray", "Le Relecq-Kerhuon", "Guipavas", "Séné", "Aytré", "Concarneau",
                             "La Baule-Escoublac", "Plouzané", "Plougastel-Daoulas", "Royan", "Pont-l'Abbé", "Angoulins", "Locmiquélic", "Landerneau", "L'Houmeau", "Labenne", "Riantec",
                             "Cassis","Bonifacio","Honfleur","Villefranche sur mer","Camaret sur mer", "Le Grau-du-Roi", "La Grande Motte"};
+                    trierOrdreAlphaNomsLieuxTab();
                     this.arraylist.clear();
-                    for (int i = 0; i < this.nomsLieuxListe.length; i++) {
-                        NomsLieux nomsLieux = new NomsLieux(nomsLieuxListe[i]);
+                    for (int i = 0; i < this.nomsLieuxTab.length; i++) {
+                        NomsLieux nomsLieux = new NomsLieux(nomsLieuxTab[i]);
                         // Binds all strings into an array
 
                         this.arraylist.add(nomsLieux);
@@ -58,11 +76,12 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
                 break;
             case R.id.radioButtonMer:
                 if (checked) {
-                    this.nomsLieuxListe = new String[]{"Cassis","Bonifacio","Honfleur","Villefranche sur mer","Camaret sur mer", "Le Grau-du-Roi", "La Grande Motte"
+                    this.nomsLieuxTab = new String[]{"Cassis","Bonifacio","Honfleur","Villefranche sur mer","Camaret sur mer", "Le Grau-du-Roi", "La Grande Motte"
                     };
+                    trierOrdreAlphaNomsLieuxTab();
                     this.arraylist.clear();
-                    for (int i = 0; i < this.nomsLieuxListe.length; i++) {
-                        NomsLieux nomsLieux = new NomsLieux(nomsLieuxListe[i]);
+                    for (int i = 0; i < this.nomsLieuxTab.length; i++) {
+                        NomsLieux nomsLieux = new NomsLieux(nomsLieuxTab[i]);
                         // Binds all strings into an array
 
                         this.arraylist.add(nomsLieux);
@@ -73,17 +92,20 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
                 break;
             case R.id.radioButtonOcean:
                 if (checked) {
-                    this.nomsLieuxListe = new String[]{"Bayonne", "La Rochelle", "Lorient", "Biarritz",
+                    this.nomsLieuxTab = new String[]{"Bayonne", "La Rochelle", "Lorient", "Biarritz",
                             "Brest", "Anglet", "Saint-Nazaire", "Vannes", "Rochefort", "Lanester", "Morlaix", "Les Sables-d'Olonne", "Tarnos",
                             "Boucau", "Saint-Jean-de-Luz", "Bidart", "Larmor-Plage", "Ploemeur", "Quéven", "Auray", "Le Relecq-Kerhuon", "Guipavas", "Séné", "Aytré", "Concarneau",
                             "La Baule-Escoublac", "Plouzané", "Plougastel-Daoulas", "Royan", "Pont-l'Abbé", "Angoulins", "Locmiquélic", "Landerneau", "L'Houmeau", "Labenne", "Riantec"};
+                    trierOrdreAlphaNomsLieuxTab();
                     this.arraylist.clear();
-                    for (int i = 0; i < this.nomsLieuxListe.length; i++) {
-                        NomsLieux nomsLieux = new NomsLieux(nomsLieuxListe[i]);
+
+                    for (int i = 0; i < this.nomsLieuxTab.length; i++) {
+                        NomsLieux nomsLieux = new NomsLieux(nomsLieuxTab[i]);
                         // Binds all strings into an array
 
                         this.arraylist.add(nomsLieux);
                     }
+
 
                     this.adapter.notifyDataSetChanged();
                 }
@@ -100,11 +122,12 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         viewAll();
         // Generate sample data
 
-        this.nomsLieuxListe = new String[]{"Bayonne", "La Rochelle", "Lorient", "Biarritz",
+        this.nomsLieuxTab = new String[]{"Bayonne", "La Rochelle", "Lorient", "Biarritz",
                 "Brest", "Anglet", "Saint-Nazaire", "Vannes", "Rochefort", "Lanester", "Morlaix", "Les Sables-d'Olonne", "Tarnos",
                 "Boucau", "Saint-Jean-de-Luz", "Bidart", "Larmor-Plage", "Ploemeur", "Quéven", "Auray", "Le Relecq-Kerhuon", "Guipavas", "Séné", "Aytré", "Concarneau",
                 "La Baule-Escoublac", "Plouzané", "Plougastel-Daoulas", "Royan", "Pont-l'Abbé", "Angoulins", "Locmiquélic", "Landerneau", "L'Houmeau", "Labenne", "Riantec",
                 "Cassis","Bonifacio","Honfleur","Villefranche sur mer","Camaret sur mer", "Le Grau-du-Roi", "La Grande Motte"};
+        trierOrdreAlphaNomsLieuxTab();
         /*
         int i = 0;
         while (res.movetonext()){
@@ -117,8 +140,8 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
     // Locate the ListView in listview_main.xml
         this.list = (ListView) findViewById(R.id.listview);
 
-        for (int i = 0; i < nomsLieuxListe.length; i++) {
-            NomsLieux nomsLieux = new NomsLieux(nomsLieuxListe[i]);
+        for (int i = 0; i < nomsLieuxTab.length; i++) {
+            NomsLieux nomsLieux = new NomsLieux(nomsLieuxTab[i]);
             // Binds all strings into an array
             arraylist.add(nomsLieux);
         }
