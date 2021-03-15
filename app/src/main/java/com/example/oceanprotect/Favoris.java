@@ -1,13 +1,27 @@
 package com.example.oceanprotect;
 
+import android.database.Cursor;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ListView;
+import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.util.ArrayList;
+
 public class Favoris extends AppCompatActivity {
+
+    ArrayList<String> ListItem;
+    ArrayAdapter adapter;
+    Database db;
+
+    ListView FavorisList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,6 +36,22 @@ public class Favoris extends AppCompatActivity {
         //textV.setText(texte);
 
         // Mise en place du traitement sur le bouton ...
+
+        db = new Database(this);
+        ListItem = new ArrayList<>();
+
+        FavorisList = findViewById(R.id.lvFavoris);
+
+        viewData();
+
+        FavorisList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                String text = FavorisList.getItemAtPosition(1).toString();
+                Toast.makeText(Favoris.this, ""+text, Toast.LENGTH_SHORT).show();
+            }
+        });
+
         Button boutonRetour = (Button)findViewById(R.id.buttonrtn);
 
         boutonRetour.setOnClickListener(new View.OnClickListener() {
@@ -30,5 +60,20 @@ public class Favoris extends AppCompatActivity {
                 finish();
             }
         });
+    }
+
+    private void viewData() {
+        Cursor cursor = db.viewData();
+
+        if (cursor.getCount() == 0) {
+            Toast.makeText(this, "Aucune Données", Toast.LENGTH_SHORT).show();
+        } else {
+            while (cursor.moveToNext()) {
+                ListItem.add(cursor.getString(1));
+            }
+
+            adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, ListItem);
+            FavorisList.setAdapter(adapter);
+        }
     }
 }
