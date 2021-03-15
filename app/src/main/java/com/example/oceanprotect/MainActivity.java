@@ -220,6 +220,9 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
             case R.id.quitmenu:
                 System.exit(0) ;
                 break;
+            case R.id.infos:
+                showMessage(getString(R.string.titremsginfos), getString(R.string.msginfos));
+                break;
             default:
                 return super.onOptionsItemSelected(item);
         }
