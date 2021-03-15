@@ -12,6 +12,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.RadioButton;
@@ -143,6 +144,24 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
 
         this.myDb = new Database(this);
 
+        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(MainActivity.this, InfosPollution.class);
+
+                // Récupère la valeur de l'item à la position sur laquelle on a cliqué
+                NomsLieux valeurItem = (NomsLieux) parent.getItemAtPosition(position);
+
+                String msg = valeurItem.getNomsLieux();
+
+                // Fixe un paramètre sous la forme clé-valeur
+                intent.putExtra("letexte", msg);
+
+                //Toast.makeText(MainActivity.this, valeurItem, Toast.LENGTH_SHORT).show();
+
+                startActivity(intent);
+            }
+        });
     }
 
     public void viewAll() {

@@ -32,6 +32,10 @@
 
         <activity android:name=".Map"
                 android:label="GoogleMap"/>
+        <activity
+            android:name=".InfosPollution"
+            android:label="@string/titleInfosPollution">
+        </activity>
     </application>
 
 </manifest>
