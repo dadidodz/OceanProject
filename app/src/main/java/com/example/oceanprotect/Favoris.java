@@ -63,7 +63,7 @@ public class Favoris extends AppCompatActivity {
     }
 
     private void viewData() {
-        Cursor cursor = db.viewData();
+        Cursor cursor = db.viewData("Select * from ocean_table where FAVORIS = 'true'");
 
         if (cursor.getCount() == 0) {
             Toast.makeText(this, "Aucune Données", Toast.LENGTH_SHORT).show();

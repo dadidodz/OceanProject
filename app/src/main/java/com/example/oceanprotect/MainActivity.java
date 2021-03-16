@@ -13,10 +13,14 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.SearchView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -24,31 +28,28 @@ import java.util.Collections;
 public class MainActivity extends AppCompatActivity implements SearchView.OnQueryTextListener {
 
     // Declare Variables
-    Database myDb;
-    ListView list;
-    ListViewAdapter adapter;
-    SearchView editsearch;
-    String[] nomsLieuxTab;
-    ArrayList<NomsLieux> arraylist = new ArrayList<NomsLieux>();
-    Button btnviewAll;
-    private SQLiteOpenHelper DBHelper;
+    private Database myDb;
+    private ListView list;
+    private ListViewAdapter adapter;
+    private SearchView editsearch;
+    private ArrayList<NomsLieux> nomsLieuxlist = new ArrayList<NomsLieux>();
+    private Button btnviewAll;
+    private ArrayList<String> ListItem;
 
-    public void trierOrdreAlphaNomsLieuxTab() {
-        int tailletableau=nomsLieuxTab.length;
+    public void trierOrdreAlphaNomsLieuxList() {
+        int tailletableau=ListItem.size();
         String tmp;
-        for (int i=0; i < tailletableau; i++)
-        {
-            for (int j=i+1; j < tailletableau; j++)
-            {
-                if (nomsLieuxTab[i].compareTo(nomsLieuxTab[j]) > 0)
-                {
-                    tmp = nomsLieuxTab[i];
-                    nomsLieuxTab[i] = nomsLieuxTab[j];
-                    nomsLieuxTab[j] = tmp;
+        for (int i=0; i < tailletableau; i++) {
+            for (int j=i+1; j < tailletableau; j++) {
+                if (ListItem.get(i).compareTo(ListItem.get(j)) > 0) {
+                    tmp = ListItem.get(i);
+                    ListItem.set(i,ListItem.get(j));
+                    ListItem.set(j,tmp);
                 }
             }
         }
     }
+
     public void onRadioButtonClicked(View view) {
         // Is the button now checked?
         boolean checked = ((RadioButton) view).isChecked();
@@ -57,59 +58,40 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         switch(view.getId()) {
             case R.id.radioButtonTout:
                 if (checked){
-                    this.nomsLieuxTab = new String[]{"Bayonne", "La Rochelle", "Lorient", "Biarritz",
-                            "Brest", "Anglet", "Saint-Nazaire", "Vannes", "Rochefort", "Lanester", "Morlaix", "Les Sables-d'Olonne", "Tarnos",
-                            "Boucau", "Saint-Jean-de-Luz", "Bidart", "Larmor-Plage", "Ploemeur", "Quéven", "Auray", "Le Relecq-Kerhuon", "Guipavas", "Séné", "Aytré", "Concarneau",
-                            "La Baule-Escoublac", "Plouzané", "Plougastel-Daoulas", "Royan", "Pont-l'Abbé", "Angoulins", "Locmiquélic", "Landerneau", "L'Houmeau", "Labenne", "Riantec",
-                            "Cassis","Bonifacio","Honfleur","Villefranche sur mer","Camaret sur mer", "Le Grau-du-Roi", "La Grande Motte"};
-                    trierOrdreAlphaNomsLieuxTab();
-                    this.arraylist.clear();
-                    for (int i = 0; i < this.nomsLieuxTab.length; i++) {
-                        NomsLieux nomsLieux = new NomsLieux(nomsLieuxTab[i]);
-                        // Binds all strings into an array
-
-                        this.arraylist.add(nomsLieux);
-                    }
-
-                    this.adapter.notifyDataSetChanged();
+                    viewDataFactoriser("select NAME from ocean_table");
                 }
                 break;
             case R.id.radioButtonMer:
                 if (checked) {
-                    this.nomsLieuxTab = new String[]{"Cassis","Bonifacio","Honfleur","Villefranche sur mer","Camaret sur mer", "Le Grau-du-Roi", "La Grande Motte"
-                    };
-                    trierOrdreAlphaNomsLieuxTab();
-                    this.arraylist.clear();
-                    for (int i = 0; i < this.nomsLieuxTab.length; i++) {
-                        NomsLieux nomsLieux = new NomsLieux(nomsLieuxTab[i]);
-                        // Binds all strings into an array
-
-                        this.arraylist.add(nomsLieux);
-                    }
-
-                    this.adapter.notifyDataSetChanged();
+                    viewDataFactoriser("select NAME from ocean_table where mer='true'");
                 }
                 break;
             case R.id.radioButtonOcean:
                 if (checked) {
-                    this.nomsLieuxTab = new String[]{"Bayonne", "La Rochelle", "Lorient", "Biarritz",
-                            "Brest", "Anglet", "Saint-Nazaire", "Vannes", "Rochefort", "Lanester", "Morlaix", "Les Sables-d'Olonne", "Tarnos",
-                            "Boucau", "Saint-Jean-de-Luz", "Bidart", "Larmor-Plage", "Ploemeur", "Quéven", "Auray", "Le Relecq-Kerhuon", "Guipavas", "Séné", "Aytré", "Concarneau",
-                            "La Baule-Escoublac", "Plouzané", "Plougastel-Daoulas", "Royan", "Pont-l'Abbé", "Angoulins", "Locmiquélic", "Landerneau", "L'Houmeau", "Labenne", "Riantec"};
-                    trierOrdreAlphaNomsLieuxTab();
-                    this.arraylist.clear();
-
-                    for (int i = 0; i < this.nomsLieuxTab.length; i++) {
-                        NomsLieux nomsLieux = new NomsLieux(nomsLieuxTab[i]);
-                        // Binds all strings into an array
-
-                        this.arraylist.add(nomsLieux);
-                    }
-
-
-                    this.adapter.notifyDataSetChanged();
+                    viewDataFactoriser("select NAME from ocean_table where mer='false'");
                 }
                 break;
+        }
+    }
+
+    private void viewDataFactoriser(String query) {
+        Cursor cursor = myDb.viewData(query);
+
+        this.ListItem.clear();
+        this.nomsLieuxlist.clear();
+        if (cursor.getCount() == 0) {
+            Toast.makeText(this, "Aucune Données", Toast.LENGTH_SHORT).show();
+        } else {
+            while (cursor.moveToNext()) {
+                this.ListItem.add(cursor.getString(0));
+            }
+            trierOrdreAlphaNomsLieuxList();
+            for (int i = 0; i < this.ListItem.size(); i++) {
+                NomsLieux nomsLieux = new NomsLieux(this.ListItem.get(i));
+                // Binds all strings into an array
+                this.nomsLieuxlist.add(nomsLieux);
+            }
+            this.adapter.notifyDataSetChanged();
         }
     }
 
@@ -119,35 +101,28 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         setContentView(R.layout.activity_main);
 
         this.btnviewAll = (Button) findViewById(R.id.buttonviewtable);
-        viewAll();
-        // Generate sample data
+        this.myDb = new Database(this);
 
-        this.nomsLieuxTab = new String[]{"Bayonne", "La Rochelle", "Lorient", "Biarritz",
-                "Brest", "Anglet", "Saint-Nazaire", "Vannes", "Rochefort", "Lanester", "Morlaix", "Les Sables-d'Olonne", "Tarnos",
-                "Boucau", "Saint-Jean-de-Luz", "Bidart", "Larmor-Plage", "Ploemeur", "Quéven", "Auray", "Le Relecq-Kerhuon", "Guipavas", "Séné", "Aytré", "Concarneau",
-                "La Baule-Escoublac", "Plouzané", "Plougastel-Daoulas", "Royan", "Pont-l'Abbé", "Angoulins", "Locmiquélic", "Landerneau", "L'Houmeau", "Labenne", "Riantec",
-                "Cassis","Bonifacio","Honfleur","Villefranche sur mer","Camaret sur mer", "Le Grau-du-Roi", "La Grande Motte"};
-        trierOrdreAlphaNomsLieuxTab();
-        /*
-        int i = 0;
-        while (res.movetonext()){
-            this.nomsLieuxListe[i] = requete SQL "SELECT NAME FROM TABLE_NAME";
-            i++;
+        viewAll();
+
+        ListItem = new ArrayList<>();
+        Cursor cursor = myDb.viewData("select NAME from ocean_table");
+
+        while (cursor.moveToNext()) {
+            this.ListItem.add(cursor.getString(0));
+        }
+        this.nomsLieuxlist.clear();
+        for (int i = 0; i < this.ListItem.size(); i++) {
+            NomsLieux nomsLieux = new NomsLieux(this.ListItem.get(i));
+            // Binds all strings into an array
+            this.nomsLieuxlist.add(nomsLieux);
         }
 
-         */
-
-    // Locate the ListView in listview_main.xml
+        // Locate the ListView in listview_main.xml
         this.list = (ListView) findViewById(R.id.listview);
 
-        for (int i = 0; i < nomsLieuxTab.length; i++) {
-            NomsLieux nomsLieux = new NomsLieux(nomsLieuxTab[i]);
-            // Binds all strings into an array
-            arraylist.add(nomsLieux);
-        }
-
         // Pass results to ListViewAdapter Class
-        this.adapter = new ListViewAdapter(this, arraylist);
+        this.adapter = new ListViewAdapter(this, this.nomsLieuxlist);
 
         // Binds the Adapter to the ListView
         this.list.setAdapter(this.adapter);
@@ -164,8 +139,6 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
                 startActivity(new Intent(MainActivity.this, Map.class));
             }
         });
-
-        this.myDb = new Database(this);
 
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -186,6 +159,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
             }
         });
     }
+
 
     public void viewAll() {
         btnviewAll.setOnClickListener(

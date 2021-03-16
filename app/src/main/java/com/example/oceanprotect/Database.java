@@ -57,28 +57,14 @@ public class Database extends SQLiteOpenHelper {
         return res;
     }
 
-    private static final String SQL_CATEGORY_NAME =
-            "SELECT " + COL_2 + "FROM " + TABLE_NAME;
-
-    public String getCategoryName(int i)
-    {
-        Cursor cursor = null;
-        try {
-            SQLiteDatabase database = DBHelper.getWritableDatabase();
-            cursor = database.rawQuery(SQL_CATEGORY_NAME , new String[] { Integer.toString(i) } );
-            return (cursor.moveToFirst()) ? cursor.getString(0) : null;
-        } finally {
-            if (cursor != null) cursor.close();
-        }
-    }
-
-    public Cursor viewData() {
+    public Cursor viewData(String query) {
         SQLiteDatabase db = this.getWritableDatabase();
-        String query = "Select * from ocean_table where FAVORIS = 'true'";
         Cursor cursor = db.rawQuery(query, null);
 
         return cursor;
     }
+
+
 
 
 }

@@ -14,10 +14,10 @@ public class InfosPollution extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.infospollution_layout);
 
-        // Récupère le paramètre de l'intent via la clé utilisée
+        // Recupere le parametre de l'intent via la cle utilisee
         String texte = getIntent().getStringExtra("letexte");
 
-        // modifie le texte du label de l'activité avec cette valeur
+        // modifie le texte du label de l'activite avec cette valeur
         TextView textV = (TextView)findViewById(R.id.textView);
         textV.setText(texte);
 

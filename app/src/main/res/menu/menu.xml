@@ -6,6 +6,7 @@
         android:icon="@android:drawable/btn_star_big_on"
         android:title="@string/menuinfo"
         app:showAsAction="always" />
+
     <item
         android:id="@+id/infos"
         android:title="@string/infosmenu"
