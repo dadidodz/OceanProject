@@ -8,6 +8,7 @@
 
 
     <LinearLayout
+        android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
@@ -80,15 +81,6 @@
                 android:text="@string/radbtnocean" />
         </RadioGroup>
 
-        <SearchView
-            android:id="@+id/search"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:iconifiedByDefault="false">
-
-
-        </SearchView>
-
         <ListView
             android:id="@+id/listview"
             android:layout_width="match_parent"
@@ -97,6 +89,34 @@
         </ListView>
 
     </LinearLayout>
+
+    <SearchView
+        android:id="@+id/search"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:iconifiedByDefault="false"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/Lieu"
+        app:layout_constraintVertical_bias="0.024">
+
+
+    </SearchView>
+
+    <TextView
+        android:id="@+id/Lieu"
+        android:layout_width="66dp"
+        android:layout_height="34dp"
+        app:layout_constraintBottom_toTopOf="@+id/search"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_alignParentTop="true"
+        android:text="Ok"
+        android:textSize="30sp"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

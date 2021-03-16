@@ -20,6 +20,7 @@ import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.SearchView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -35,6 +36,9 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
     private ArrayList<NomsLieux> nomsLieuxlist = new ArrayList<NomsLieux>();
     private Button btnviewAll;
     private ArrayList<String> ListItem;
+    private Map m;
+    TextView Lieu = (TextView) findViewById(R.id.Lieu);
+
 
     public void trierOrdreAlphaNomsLieuxList() {
         int tailletableau=ListItem.size();
@@ -105,6 +109,8 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
 
         viewAll();
 
+        Lieu.setText("ok");
+
         ListItem = new ArrayList<>();
         Cursor cursor = myDb.viewData("select NAME from ocean_table");
 
@@ -158,9 +164,17 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
                 startActivity(intent);
             }
         });
+
     }
-
-
+/*
+    public void RetourAdresse() {
+        if (m.getAdresse() == null) {
+            Lieu.setText("Rechercher sur la map");
+        } else {
+            Lieu.setText(m.getAdresse());
+        }
+    }
+*/
     public void viewAll() {
         btnviewAll.setOnClickListener(
                 new View.OnClickListener() {

@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.SearchView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentActivity;
@@ -27,6 +28,7 @@ public class Map extends FragmentActivity implements OnMapReadyCallback {
     GoogleMap map;
     SupportMapFragment mapFragment;
     SearchView searchView;
+    String Lieu = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,12 +43,27 @@ public class Map extends FragmentActivity implements OnMapReadyCallback {
             @Override
             public boolean onQueryTextSubmit(String query) {
                 String location = searchView.getQuery().toString();
-                List<Address> addressList = null;
+                Lieu = location;
 
+                List<Address> addressList = null;
                 if (location != null || !location.equals("")) {
                     Geocoder geocoder = new Geocoder(Map.this);
+
                     try {
                         addressList = geocoder.getFromLocationName(location, 1);
+
+                        String addresse = addressList.get(0).getAddressLine(0);
+                        String city = addressList.get(0).getAddressLine(0);
+                        String country = addressList.get(0).getAddressLine(0);
+                        if(addresse==null)
+                            addresse="";
+                        if(city==null)
+                            city="";
+                        if(country==null)
+                            country="";
+
+                        Toast.makeText(Map.this, addresse + "  " + city + " " + country, Toast.LENGTH_LONG).show();
+
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
@@ -67,6 +84,10 @@ public class Map extends FragmentActivity implements OnMapReadyCallback {
 
         mapFragment.getMapAsync(this);
 
+    }
+
+    public String getAdresse() {
+        return Lieu;
     }
 
     @Override
