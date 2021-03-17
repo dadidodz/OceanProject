@@ -18,4 +18,6 @@
     <string name="texteMain">En utilisant Google Maps, les filtres ou bien la barre de recherche, trouvez la ville du littoral français qui vous intéresse pour accéder à ses informations de pollution !</string>
     <string name="titleInfosPollution">Informations pollution</string>
     <string name="texteBoutonRetour">Retour</string>
+    <string name="checkfav">Favori</string>
+    <string name="listitemville">Ville :</string>
 </resources>

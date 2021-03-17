@@ -20,5 +20,7 @@
     <string name="texteMain">Using Google Maps, the filters or the search bar, find the French coastal city you are interested in to access its pollution information !</string>
     <string name="titleInfosPollution">Pollution information</string>
     <string name="texteBoutonRetour">Back</string>
+    <string name="checkfav">Favourite</string>
+    <string name="listitemville">City : </string>
 
 </resources>

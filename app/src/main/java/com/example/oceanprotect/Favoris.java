@@ -62,7 +62,7 @@ public class Favoris extends AppCompatActivity {
                 //String msg = valeurItem.getNomsLieux();
 
                 // Fixe un paramètre sous la forme clé-valeur
-                intent.putExtra("letexte",valeurItem);
+                intent.putExtra("nomlieu",valeurItem);
 
                 //Toast.makeText(MainActivity.this, valeurItem, Toast.LENGTH_SHORT).show();
 
@@ -75,6 +75,7 @@ public class Favoris extends AppCompatActivity {
         boutonRetour.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 finish();
             }
         });

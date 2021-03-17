@@ -89,6 +89,19 @@ public class Database extends SQLiteOpenHelper {
         return cursor;
     }
 
+    public void ajouterFavori(String nomlieu){
+        SQLiteDatabase db = this.getWritableDatabase();
+        String strSQL = "UPDATE ocean_table SET FAVORIS = 'true' WHERE NAME='"+ nomlieu + "'";
+        db.execSQL(strSQL);
+    }
+
+    public void supprimerFavori(String nomlieu){
+        SQLiteDatabase db = this.getWritableDatabase();
+        String strSQL = "UPDATE ocean_table SET FAVORIS = 'false' WHERE NAME='"+ nomlieu + "'";
+        db.execSQL(strSQL);
+    }
+
+
     public void executerRequete(String strSQL){
         SQLiteDatabase db = this.getWritableDatabase();
         db.execSQL(strSQL);
