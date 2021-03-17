@@ -52,6 +52,9 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         this.btnviewAll = (Button) findViewById(R.id.buttonviewtable);
         this.myDb = new Database(this);
 
+        viewAll();
+
+        TextView Lieu = (TextView) findViewById(R.id.Lieu);
 
 
         this.textV = (TextView)findViewById(R.id.textView4);
@@ -118,6 +121,36 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
     public void RetourAdresse() {
 
 */
+
+    public void viewAll() {
+        btnviewAll.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Cursor res = myDb.getAllData();
+                        if(res.getCount() == 0) {
+                            // voir les messages
+                            showMessage("Error", "Aucune data");
+                            return;
+                        }
+
+                        StringBuffer buffer = new StringBuffer();
+                        while(res.moveToNext()) {
+                            buffer.append("ID :" + res.getString(0) + "\n");
+                            buffer.append("Name :" + res.getString(1) + "\n");
+                            buffer.append("Description :" + res.getString(2) + "\n");
+                            buffer.append("Information :" + res.getString(3) + "\n");
+                        }
+
+                        //Voir toutes les datas
+                        showMessage("Data", buffer.toString());
+
+                    }
+                }
+        );
+    }
+
+
 
     public void showMessage (String title, String message) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
