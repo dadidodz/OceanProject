@@ -49,12 +49,12 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         setContentView(R.layout.activity_main);
 
 
-        this.btnviewAll = (Button) findViewById(R.id.buttonviewtable);
+        //this.btnviewAll = (Button) findViewById(R.id.buttonviewtable);
         this.myDb = new Database(this);
 
-        viewAll();
+        //viewAll();
 
-        TextView Lieu = (TextView) findViewById(R.id.Lieu);
+        //TextView Lieu = (TextView) findViewById(R.id.Lieu);
 
 
         this.textV = (TextView)findViewById(R.id.textView4);
@@ -120,7 +120,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
 /*
     public void RetourAdresse() {
 
-*/
+
 
     public void viewAll() {
         btnviewAll.setOnClickListener(
@@ -149,6 +149,8 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
                 }
         );
     }
+
+ */
 
 
 
