@@ -21,5 +21,6 @@
     <string name="checkfav">Favori</string>
     <string name="listitemville">Ville :</string>
     <string name="sources">Ces informations ont été récoltées du site internet :\n https://fr.climate-data.org/</string>
+    <string name="recherche">Rechercher...</string>
 
 </resources>

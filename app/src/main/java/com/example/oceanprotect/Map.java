@@ -73,18 +73,6 @@ public class Map extends FragmentActivity implements OnMapReadyCallback {
 
         mapFragment.getMapAsync(this);
 
-        Intent intent = getIntent();
-        SearchView searchViewPlace = findViewById(R.id.sv_location);
-        searchViewPlace.setOnSearchClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent resultIntent = new Intent();
-                resultIntent.putExtra("result", Lieu);
-                setResult(RESULT_OK, resultIntent);
-                finish();
-            }
-        });
-
     }
 
     @Override
