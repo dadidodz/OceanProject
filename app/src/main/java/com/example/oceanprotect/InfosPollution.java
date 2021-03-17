@@ -1,5 +1,7 @@
 package com.example.oceanprotect;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.view.View;
@@ -52,7 +54,9 @@ public class InfosPollution extends AppCompatActivity  {
         boutonRetour.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //notifyAll();
+                Intent intentResult = new Intent();
+                intentResult.putExtra("result", db.countFavori());
+                setResult(RESULT_OK, intentResult);
                 finish();
             }
         });
@@ -64,9 +68,11 @@ public class InfosPollution extends AppCompatActivity  {
                 if(isChecked)  {
                     //Cursor cursor = db.viewData("select NAME, DESCRIPTION from ocean_table WHERE NAME='" + texte +"'");
                     db.ajouterFavori(nomlieu);
+
                     Toast.makeText(InfosPollution.this, nomlieu + " ajoutee aux favoris", Toast.LENGTH_SHORT).show();
                 } else {
                     db.supprimerFavori(nomlieu);
+
                     Toast.makeText(InfosPollution.this, nomlieu + " supprimee des favoris", Toast.LENGTH_SHORT).show();
                 }
             }
@@ -79,14 +85,14 @@ public class InfosPollution extends AppCompatActivity  {
 
         if (cursor.getCount() == 0) {
             Toast.makeText(this, "Aucune Donnees", Toast.LENGTH_SHORT).show();
-            cursor.close();
+            //cursor.close();
         } else {
             while (cursor.moveToNext()) {
                 retour = cursor.getString(0) + "\n" + cursor.getString(1);
             }
 
         }
-       cursor.close();
+       //cursor.close();
        return retour;
     }
 
@@ -95,16 +101,18 @@ public class InfosPollution extends AppCompatActivity  {
         Cursor cursor = db.viewData("select FAVORIS from ocean_table WHERE NAME='" + texte +"'");
 
         if (cursor.getCount() == 0) {
-            cursor.close();
+            //cursor.close();
             Toast.makeText(this, "Aucune Donnees", Toast.LENGTH_SHORT).show();
         } else {
             while (cursor.moveToNext()) {
                 retour = cursor.getString(0);
             }
         }
-        cursor.close();
+        //cursor.close();
         return retour;
     }
+
+
 
 
 

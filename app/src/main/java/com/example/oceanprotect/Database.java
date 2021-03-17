@@ -53,9 +53,6 @@ public class Database extends SQLiteOpenHelper {
         db.execSQL("INSERT INTO " + TABLE_NAME+ "(NAME, DESCRIPTION, FAVORIS, MEROCEAN ) VALUES ('Etretat', 'Pollution normale','true', 'true')");
         db.execSQL("INSERT INTO " + TABLE_NAME+ "(NAME, DESCRIPTION, FAVORIS, MEROCEAN ) VALUES ('Saint-Malo', 'Pollution normale','true', 'true')");
 
-
-
-
     }
 
 
@@ -101,10 +98,11 @@ public class Database extends SQLiteOpenHelper {
         db.execSQL(strSQL);
     }
 
-
-    public void executerRequete(String strSQL){
-        SQLiteDatabase db = this.getWritableDatabase();
-        db.execSQL(strSQL);
+    public int countFavori(){
+        Cursor cursor = viewData("Select * from ocean_table where FAVORIS = 'true' ORDER BY NAME ASC");
+        int count = cursor.getCount();
+        cursor.close();
+        return count;
     }
 
 }

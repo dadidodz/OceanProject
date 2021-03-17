@@ -5,6 +5,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Bundle;
@@ -29,6 +30,8 @@ import java.util.Collections;
 public class MainActivity extends AppCompatActivity implements SearchView.OnQueryTextListener {
 
     // Declare Variables
+
+    public static final int NB_FAV = 0;
     private Database myDb;
     private ListView list;
     private ListViewAdapter adapter;
@@ -36,68 +39,25 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
     private ArrayList<NomsLieux> nomsLieuxlist = new ArrayList<NomsLieux>();
     private Button btnviewAll;
     private ArrayList<String> ListItem;
-    private Map m;
-    private TextView result;
+    private TextView textV;
 
-    public void onRadioButtonClicked(View view) {
-        // Is the button now checked?
-        boolean checked = ((RadioButton) view).isChecked();
 
-        // Check which radio button was clicked
-        switch(view.getId()) {
-            case R.id.radioButtonTout:
-                if (checked){
-                    viewDataFactoriser("select NAME from ocean_table order by NAME ASC");
-                }
-                break;
-            case R.id.radioButtonMer:
-                if (checked) {
-                    viewDataFactoriser("select NAME from ocean_table where MEROCEAN='true' order by NAME ASC");
-                }
-                break;
-            case R.id.radioButtonOcean:
-                if (checked) {
-                    viewDataFactoriser("select NAME from ocean_table where MEROCEAN='false' order by NAME ASC");
-                }
-                break;
-        }
-    }
-
-    private void viewDataFactoriser(String query) {
-        Cursor cursor = myDb.viewData(query);
-
-        this.ListItem.clear();
-        this.nomsLieuxlist.clear();
-        if (cursor.getCount() == 0) {
-            Toast.makeText(this, "Aucune Données", Toast.LENGTH_SHORT).show();
-        } else {
-            while (cursor.moveToNext()) {
-                this.ListItem.add(cursor.getString(0));
-            }
-            for (int i = 0; i < this.ListItem.size(); i++) {
-                NomsLieux nomsLieux = new NomsLieux(this.ListItem.get(i));
-                // Binds all strings into an array
-                this.nomsLieuxlist.add(nomsLieux);
-            }
-            this.adapter.notifyDataSetChanged();
-        }
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        result = findViewById(R.id.Lieu);
 
         this.btnviewAll = (Button) findViewById(R.id.buttonviewtable);
         this.myDb = new Database(this);
 
-        //viewAll();
 
-        TextView Lieu = (TextView) findViewById(R.id.Lieu);
 
-        ListItem = new ArrayList<>();
+        this.textV = (TextView)findViewById(R.id.textView4);
+        this.textV.setText(String.valueOf(myDb.countFavori()) + " favoris");
+
+        this.ListItem = new ArrayList<>();
         Cursor cursor = myDb.viewData("select NAME from ocean_table order by NAME ASC");
 
         while (cursor.moveToNext()) {
@@ -132,7 +92,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
             }
         });
 
-        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        this.list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(MainActivity.this, InfosPollution.class);
@@ -143,13 +103,15 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
                 String msg = valeurItem.getNomsLieux();
 
                 // Fixe un paramètre sous la forme clé-valeur
-                intent.putExtra("letexte", msg);
+                intent.putExtra("nomlieu", msg);
 
                 //Toast.makeText(MainActivity.this, valeurItem, Toast.LENGTH_SHORT).show();
 
-                startActivity(intent);
+                startActivityForResult(intent, 1);
             }
         });
+
+
 
     }
 /*
@@ -174,7 +136,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
     @Override
     public boolean onQueryTextChange(String newText) {
         String text = newText;
-        adapter.filter(text);
+        this.adapter.filter(text);
         return false;
     }
 
@@ -191,15 +153,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
             case R.id.favori:
                 Intent intent = new Intent(MainActivity.this, Favoris.class);
 
-                // Récupère la valeur de l'item à la position sur laquelle on a cliqué
-                //String valeurItem = (String) parent.getItemAtPosition(position);
-
-                // Fixe un paramètre sous la forme clé-valeur
-                //intent.putExtra("letexte", valeurItem);
-
-                //Toast.makeText(MainActivity.this, "bonjour", Toast.LENGTH_SHORT).show();
-
-                startActivity(intent);
+                startActivityForResult(intent, 1);
                 break;
             case R.id.quitmenu:
                 System.exit(0) ;
@@ -218,12 +172,57 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 1) {
             if (resultCode == RESULT_OK) {
-                String resultat = data.getStringExtra("result");
-                result.setText("" + resultat);
+                int resultat = data.getIntExtra("result", 0);
+                this.textV.setText(resultat + " favoris");
             }
             if (resultCode == RESULT_CANCELED) {
-                result.setText("Rechercher sur google map");
+
+                this.textV.setText("Erreur");
             }
+        }
+    }
+
+    public void onRadioButtonClicked(View view) {
+        // Is the button now checked?
+        boolean checked = ((RadioButton) view).isChecked();
+
+        // Check which radio button was clicked
+        switch(view.getId()) {
+            case R.id.radioButtonTout:
+                if (checked){
+                    viewDataFactoriser("select NAME from ocean_table order by NAME ASC");
+                }
+                break;
+            case R.id.radioButtonMer:
+                if (checked) {
+                    viewDataFactoriser("select NAME from ocean_table where MEROCEAN='true' order by NAME ASC");
+                }
+                break;
+            case R.id.radioButtonOcean:
+                if (checked) {
+                    viewDataFactoriser("select NAME from ocean_table where MEROCEAN='false' order by NAME ASC");
+                }
+                break;
+        }
+    }
+
+    private void viewDataFactoriser(String query) {
+        Cursor cursor = this.myDb.viewData(query);
+
+        this.ListItem.clear();
+        this.nomsLieuxlist.clear();
+        if (cursor.getCount() == 0) {
+            Toast.makeText(this, "Aucune Données", Toast.LENGTH_SHORT).show();
+        } else {
+            while (cursor.moveToNext()) {
+                this.ListItem.add(cursor.getString(0));
+            }
+            for (int i = 0; i < this.ListItem.size(); i++) {
+                NomsLieux nomsLieux = new NomsLieux(this.ListItem.get(i));
+                // Binds all strings into an array
+                this.nomsLieuxlist.add(nomsLieux);
+            }
+            this.adapter.notifyDataSetChanged();
         }
     }
 }

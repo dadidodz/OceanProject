@@ -1,6 +1,7 @@
 package com.example.oceanprotect;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.view.View;
@@ -18,11 +19,11 @@ import java.util.ArrayList;
 
 public class Favoris extends AppCompatActivity {
 
-    ArrayList<String> ListItem;
-    ArrayAdapter adapter;
-    Database db;
+    private ArrayList<String> ListItem;
+    private ArrayAdapter adapter;
+    private Database db;
 
-    ListView FavorisList;
+    private ListView FavorisList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,21 +39,19 @@ public class Favoris extends AppCompatActivity {
 
         // Mise en place du traitement sur le bouton ...
 
-        db = new Database(this);
-        ListItem = new ArrayList<>();
+        this.db = new Database(this);
+        this.ListItem = new ArrayList<>();
 
-        FavorisList = findViewById(R.id.lvFavoris);
+        this.FavorisList = findViewById(R.id.lvFavoris);
 
         viewData();
 
-        FavorisList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        this.FavorisList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
                 String text = FavorisList.getItemAtPosition(position).toString();
                 Toast.makeText(Favoris.this, ""+text, Toast.LENGTH_SHORT).show();
-
-
 
                 Intent intent = new Intent(Favoris.this, InfosPollution.class);
 
@@ -75,24 +74,26 @@ public class Favoris extends AppCompatActivity {
         boutonRetour.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent intentResult = new Intent();
+                intentResult.putExtra("result", db.countFavori());
+                setResult(RESULT_OK, intentResult);
                 finish();
             }
         });
     }
 
     private void viewData() {
-        Cursor cursor = db.viewData("Select * from ocean_table where FAVORIS = 'true' ORDER BY NAME ASC");
+        Cursor cursor = this.db.viewData("Select * from ocean_table where FAVORIS = 'true' ORDER BY NAME ASC");
 
         if (cursor.getCount() == 0) {
             Toast.makeText(this, "Aucune Données", Toast.LENGTH_SHORT).show();
         } else {
             while (cursor.moveToNext()) {
-                ListItem.add(cursor.getString(1));
+                this.ListItem.add(cursor.getString(1));
             }
 
-            adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, ListItem);
-            FavorisList.setAdapter(adapter);
+            this.adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, ListItem);
+            this.FavorisList.setAdapter(adapter);
         }
     }
 }
