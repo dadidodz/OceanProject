@@ -53,9 +53,6 @@ public class Database extends SQLiteOpenHelper {
         db.execSQL("INSERT INTO " + TABLE_NAME+ "(NAME, DESCRIPTION, FAVORIS, MEROCEAN ) VALUES ('Etretat', 'Pollution normale','true', 'true')");
         db.execSQL("INSERT INTO " + TABLE_NAME+ "(NAME, DESCRIPTION, FAVORIS, MEROCEAN ) VALUES ('Saint-Malo', 'Pollution normale','true', 'true')");
 
-
-
-
     }
 
 
@@ -77,12 +74,6 @@ public class Database extends SQLiteOpenHelper {
         long newRowId = db.insert(TABLE_NAME, null, values);
 
          */
-
-
-
-
-
-
         Cursor res = db.rawQuery("SELECT * FROM " + TABLE_NAME, null);
         return res;
     }
