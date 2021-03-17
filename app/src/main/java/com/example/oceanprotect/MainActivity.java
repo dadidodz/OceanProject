@@ -90,7 +90,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         this.btnviewAll = (Button) findViewById(R.id.buttonviewtable);
         this.myDb = new Database(this);
 
-        viewAll();
+        //viewAll();
 
         TextView Lieu = (TextView) findViewById(R.id.Lieu);
         Lieu.setText("ok");

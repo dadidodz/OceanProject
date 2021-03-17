@@ -47,6 +47,18 @@
                 android:layout_marginRight="10dp"
                 android:text="@string/btntable" />
 
+            <TextView
+                android:id="@+id/Lieu"
+                android:layout_width="match_parent"
+                android:layout_height="34dp"
+                android:layout_alignParentTop="true"
+                android:text="Ok"
+                android:textSize="30sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
+
             <RadioGroup
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
