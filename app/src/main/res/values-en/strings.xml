@@ -24,6 +24,10 @@
     <string name="listitemville">City : </string>
     <string name="sources">This information was collected from the website :\n https://fr.climate-data.org/</string>
     <string name="recherche">Search...</string>
+    <string name="toastfavorinodata">No data</string>
+    <string name="toastajoutfav">Added to favorites</string>
+    <string name="toastsuppfav">Deleted from favorites</string>
+    <string name="favoris">favorites</string>
 
 
 </resources>

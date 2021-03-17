@@ -60,10 +60,10 @@ public class InfosPollution extends AppCompatActivity  {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if(isChecked)  {
                     db.ajouterFavori(nomlieu);
-                    Toast.makeText(InfosPollution.this, nomlieu + " ajoutee aux favoris", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(InfosPollution.this, R.string.toastajoutfav, Toast.LENGTH_SHORT).show();
                 } else {
                     db.supprimerFavori(nomlieu);
-                    Toast.makeText(InfosPollution.this, nomlieu + " supprimee des favoris", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(InfosPollution.this, R.string.toastsuppfav, Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -74,7 +74,7 @@ public class InfosPollution extends AppCompatActivity  {
         Cursor cursor = db.viewData("select NAME from ocean_table WHERE NAME='" + texte +"'");
 
         if (cursor.getCount() == 0) {
-            Toast.makeText(this, "Aucune Donnees", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.toastfavorinodata, Toast.LENGTH_SHORT).show();
             cursor.close();
         } else {
             while (cursor.moveToNext()) {
@@ -91,7 +91,7 @@ public class InfosPollution extends AppCompatActivity  {
         Cursor cursor = db.viewData("select INFORMATION from ocean_table WHERE NAME='" + texte +"'");
 
         if (cursor.getCount() == 0) {
-            Toast.makeText(this, "Aucune Donnees", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.toastfavorinodata, Toast.LENGTH_SHORT).show();
             cursor.close();
         } else {
             while (cursor.moveToNext()) {
@@ -107,7 +107,7 @@ public class InfosPollution extends AppCompatActivity  {
         Cursor cursor = db.viewData("select DESCRIPTION from ocean_table WHERE NAME='" + texte +"'");
 
         if (cursor.getCount() == 0) {
-            Toast.makeText(this, "Aucune Donnees", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.toastfavorinodata, Toast.LENGTH_SHORT).show();
             cursor.close();
         } else {
             while (cursor.moveToNext()) {
@@ -126,7 +126,7 @@ public class InfosPollution extends AppCompatActivity  {
 
         if (cursor.getCount() == 0) {
             cursor.close();
-            Toast.makeText(this, "Aucune Donnees", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.toastfavorinodata, Toast.LENGTH_SHORT).show();
         } else {
             while (cursor.moveToNext()) {
                 retour = cursor.getInt(0);
