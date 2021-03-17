@@ -29,24 +29,20 @@ public class InfosPollution extends AppCompatActivity  {
 
         // modifie le texte du label de l'activite avec cette valeur
         TextView textV = (TextView)findViewById(R.id.textView);
-        //textV.setText(texte);
+
+        TextView info = (TextView) findViewById(R.id.information);
 
         this.db = new Database(this);
 
         textV.setText(viewData(nomlieu));
+        info.setText(viewDataInformation(nomlieu));
 
-        TextView textV2 = (TextView)findViewById(R.id.textView2);
-        textV2.setText(estFavori(nomlieu));
 
         CheckBox chk = (CheckBox) findViewById(R.id.chk1);
 
-/*
-        if(estFavori(texte)=="true"){
+        if(estFavori(nomlieu) == 1){
             chk.setChecked(true);
         }
-
- */
-
 
         // Mise en place du traitement sur le bouton ...
         Button boutonRetour = (Button)findViewById(R.id.buttonrtn);
@@ -90,14 +86,29 @@ public class InfosPollution extends AppCompatActivity  {
             while (cursor.moveToNext()) {
                 retour = cursor.getString(0) + "\n" + cursor.getString(1);
             }
-
         }
        //cursor.close();
        return retour;
     }
 
-    private String estFavori(String texte) {
-        String retour= "false";
+    private String viewDataInformation(String texte) {
+        String retour="";
+        Cursor cursor = db.viewData("select INFORMATION from ocean_table WHERE NAME='" + texte +"'");
+
+        if (cursor.getCount() == 0) {
+            Toast.makeText(this, "Aucune Donnees", Toast.LENGTH_SHORT).show();
+            cursor.close();
+        } else {
+            while (cursor.moveToNext()) {
+                retour = cursor.getString(0);
+            }
+        }
+        cursor.close();
+        return retour;
+    }
+
+    private int estFavori(String texte) {
+        int retour= 0;
         Cursor cursor = db.viewData("select FAVORIS from ocean_table WHERE NAME='" + texte +"'");
 
         if (cursor.getCount() == 0) {
@@ -105,16 +116,13 @@ public class InfosPollution extends AppCompatActivity  {
             Toast.makeText(this, "Aucune Donnees", Toast.LENGTH_SHORT).show();
         } else {
             while (cursor.moveToNext()) {
-                retour = cursor.getString(0);
+                retour = cursor.getInt(0);
             }
+
         }
         //cursor.close();
         return retour;
     }
-
-
-
-
 
 
 
