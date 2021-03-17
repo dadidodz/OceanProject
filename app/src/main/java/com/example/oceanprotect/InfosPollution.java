@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -31,6 +33,19 @@ public class InfosPollution extends AppCompatActivity  {
 
         textV.setText(viewData(texte));
 
+        TextView textV2 = (TextView)findViewById(R.id.textView2);
+        textV2.setText(estFavori(texte));
+
+        CheckBox chk = (CheckBox) findViewById(R.id.chk1);
+
+/*
+        if(estFavori(texte)=="true"){
+            chk.setChecked(true);
+        }
+
+ */
+
+
         // Mise en place du traitement sur le bouton ...
         Button boutonRetour = (Button)findViewById(R.id.buttonrtn);
 
@@ -40,6 +55,25 @@ public class InfosPollution extends AppCompatActivity  {
                 finish();
             }
         });
+
+
+        chk.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked)  {
+                    //Cursor cursor = db.viewData("select NAME, DESCRIPTION from ocean_table WHERE NAME='" + texte +"'");
+                    String strSQL = "UPDATE ocean_table SET FAVORIS = 'true' WHERE NAME='"+ texte + "'";
+
+                    db.executerRequete(strSQL);
+                    Toast.makeText(InfosPollution.this, texte + " ajoutee aux favoris", Toast.LENGTH_SHORT).show();
+                } else {
+                    String strSQL = "UPDATE ocean_table SET FAVORIS = 'false' WHERE NAME='"+ texte + "'";
+
+                    db.executerRequete(strSQL);
+                    Toast.makeText(InfosPollution.this, texte + " supprimee des favoris", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
     }
 
    private String viewData(String texte) {
@@ -47,7 +81,7 @@ public class InfosPollution extends AppCompatActivity  {
         Cursor cursor = db.viewData("select NAME, DESCRIPTION from ocean_table WHERE NAME='" + texte +"'");
 
         if (cursor.getCount() == 0) {
-            Toast.makeText(this, "Aucune Données", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Aucune Donnees", Toast.LENGTH_SHORT).show();
         } else {
             while (cursor.moveToNext()) {
                 retour = cursor.getString(0) + "\n" + cursor.getString(1);
@@ -56,6 +90,22 @@ public class InfosPollution extends AppCompatActivity  {
         }
        return retour;
     }
+
+    private String estFavori(String texte) {
+        String retour= "false";
+        Cursor cursor = db.viewData("select FAVORIS from ocean_table WHERE NAME='" + texte +"'");
+
+        if (cursor.getCount() == 0) {
+            Toast.makeText(this, "Aucune Donnees", Toast.LENGTH_SHORT).show();
+        } else {
+            while (cursor.moveToNext()) {
+                retour = cursor.getString(0);
+            }
+        }
+        return retour;
+    }
+
+
 
 
 

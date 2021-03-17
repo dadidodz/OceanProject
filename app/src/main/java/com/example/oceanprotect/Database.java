@@ -85,6 +85,10 @@ public class Database extends SQLiteOpenHelper {
         return cursor;
     }
 
+    public void executerRequete(String strSQL){
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.execSQL(strSQL);
+    }
 
 
 
