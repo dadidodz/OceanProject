@@ -20,7 +20,6 @@ public class Database extends SQLiteOpenHelper {
     public static final String COL_5 = "FAVORIS";
     public static final String COL_6 = "MEROCEAN";
 
-    private SQLiteOpenHelper DBHelper;
     Context context;
 
     public Database(Context context) {
@@ -33,13 +32,13 @@ public class Database extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         db.execSQL("CREATE TABLE " + TABLE_NAME + " (ID INTEGER PRIMARY KEY AUTOINCREMENT, NAME TEXT, DESCRIPTION TEXT, INFORMATION TEXT, FAVORIS INT, MEROCEAN BOOLEAN) ");
 
-        db.execSQL("INSERT INTO " + TABLE_NAME+ "(NAME, DESCRIPTION, INFORMATION ,  FAVORIS, MEROCEAN ) VALUES ('Peyriac', 'Pollution extrême', ' ddd ' ,0, 'true')");
-        db.execSQL("INSERT INTO " + TABLE_NAME+ "(NAME, DESCRIPTION, INFORMATION , FAVORIS, MEROCEAN ) VALUES ('Bayonne', 'Pollution forte',0, ' ' ,'false')");
-        db.execSQL("INSERT INTO " + TABLE_NAME+ "(NAME, DESCRIPTION, INFORMATION , FAVORIS, MEROCEAN ) VALUES ('La Rochelle', 'Pollution normale', ' ' ,0, 'false')");
-        db.execSQL("INSERT INTO " + TABLE_NAME+ "(NAME, DESCRIPTION, INFORMATION , FAVORIS, MEROCEAN ) VALUES ('Lorient', 'Pollution basse', ' ' ,1, 'false')");
-        db.execSQL("INSERT INTO " + TABLE_NAME+ "(NAME, DESCRIPTION, INFORMATION , FAVORIS, MEROCEAN ) VALUES ('Biarritz', 'Pollution forte', ' ' , 0, 'false')");
+        db.execSQL("INSERT INTO " + TABLE_NAME+ "(NAME, DESCRIPTION, INFORMATION , FAVORIS, MEROCEAN ) VALUES ('Peyriac', 'Pollution élevée', 'Le Anglet se trouve à 28m d''altitude La ville de Anglet bénéficie d'un climat tempéré chaud. Anglet est une ville avec des précipitations importantes. Même pendant le mois le plus sec il ya beaucoup de pluie. La carte climatique de Köppen-Geiger y classe le climat comme étant de type Cfb. La température moyenne annuelle est de 14.3 °C °C à Anglet. Il tombe en moyenne 1278 mm de pluie par an.' ,0, 'true')");
+        db.execSQL("INSERT INTO " + TABLE_NAME+ "(NAME, DESCRIPTION, INFORMATION , FAVORIS, MEROCEAN ) VALUES ('Bayonne', 'Pollution forte','Le Bayonne se trouve à 1m d'altitude La ville de Bayonne bénéficie d'un climat tempéré chaud. Les précipitations à Bayonne sont importantes. Même lors des mois les plus secs, les averses persistent encore. Selon la classification de Köppen-Geiger, le climat est de type Cfb. Sur l'année, la température moyenne à Bayonne est de 14.3 °C. Les précipitations annuelles moyennes sont de 1278 mm.', 0 ,'false')");
+        db.execSQL("INSERT INTO " + TABLE_NAME+ "(NAME, DESCRIPTION, INFORMATION , FAVORIS, MEROCEAN ) VALUES ('La Rochelle', 'Pollution normale', 'La Rochelle se trouve à 13m d'altitude Le climat y est chaud et tempéré. La Rochelle est une ville avec des précipitations importantes. Même pendant le mois le plus sec il ya beaucoup de pluie. La carte climatique de Köppen-Geiger y classe le climat comme étant de type Cfb. La température moyenne annuelle à La Rochelle est de 13.3 °C. Sur l'année, la précipitation moyenne est de 798 mm.' ,0, 'false')");
+        db.execSQL("INSERT INTO " + TABLE_NAME+ "(NAME, DESCRIPTION, INFORMATION , FAVORIS, MEROCEAN ) VALUES ('Lorient', 'Pollution basse', 'Le Lorient se trouve à 18m d'altitude Le climat y est chaud et tempéré. Des précipitations importantes sont enregistrées toute l'année à Lorient, y compris lors des mois les plus secs. La carte climatique de Köppen-Geiger y classe le climat comme étant de type Cfb. Lorient affiche 12.4 °C de température en moyenne sur toute l'année. Les précipitations annuelles moyennes sont de 864 mm.' ,1, 'false')");
+        db.execSQL("INSERT INTO " + TABLE_NAME+ "(NAME, DESCRIPTION, INFORMATION , FAVORIS, MEROCEAN ) VALUES ('Biarritz', 'Pollution forte', 'Le Biarritz se trouve à 63m d'altitude Le climat de Biarritz est chaud et tempéré. Des précipitations importantes sont enregistrées toute l'année à Biarritz, y compris lors des mois les plus secs. La carte climatique de Köppen-Geiger y classe le climat comme étant de type Cfb. La température moyenne annuelle est de 14.1 °C °C à Biarritz. Il tombe en moyenne 1278 mm de pluie par an.' , 0, 'false')");
         db.execSQL("INSERT INTO " + TABLE_NAME+ "(NAME, DESCRIPTION, INFORMATION , FAVORIS, MEROCEAN ) VALUES ('Brest', 'Pollution normale', ' ' , 0, 'false')");
-        db.execSQL("INSERT INTO " + TABLE_NAME+ "(NAME, DESCRIPTION, INFORMATION , FAVORIS, MEROCEAN ) VALUES ('Anglet', 'Pollution basse', ' La ville de Anglet bénéficie d un climat tempéré chaud. Anglet est une ville avec des précipitations importantes. ... La température moyenne annuelle est de 14.3 °C °C à Anglet. Il tombe en moyenne 1278 mm de pluie par an.' ,0, 'false')");
+        db.execSQL("INSERT INTO " + TABLE_NAME+ "(NAME, DESCRIPTION, INFORMATION , FAVORIS, MEROCEAN ) VALUES ('Anglet', 'Pollution basse', 'La ville de Anglet bénéficie d''un climat tempéré chaud. Anglet est une ville avec des précipitations importantes.\nLa température moyenne annuelle est de 14.3 °C. Il tombe en moyenne 1278 mm de pluie par an.' ,0, 'false')");
         db.execSQL("INSERT INTO " + TABLE_NAME+ "(NAME, DESCRIPTION, INFORMATION , FAVORIS, MEROCEAN ) VALUES ('Saint-Nazaire', 'Pollution normale', '' ,1, 'false')");
         db.execSQL("INSERT INTO " + TABLE_NAME+ "(NAME, DESCRIPTION, INFORMATION , FAVORIS, MEROCEAN ) VALUES ('Vannes', 'Pollution basse', '' ,0, 'false')");
         db.execSQL("INSERT INTO " + TABLE_NAME+ "(NAME, DESCRIPTION, INFORMATION , FAVORIS, MEROCEAN ) VALUES ('Rochefort', 'Pollution basse', '', 0, 'false')");
@@ -54,7 +53,6 @@ public class Database extends SQLiteOpenHelper {
         db.execSQL("INSERT INTO " + TABLE_NAME+ "(NAME, DESCRIPTION, INFORMATION , FAVORIS, MEROCEAN ) VALUES ('Etretat', 'Pollution normale', '' ,0, 'true')");
         db.execSQL("INSERT INTO " + TABLE_NAME+ "(NAME, DESCRIPTION, INFORMATION , FAVORIS, MEROCEAN ) VALUES ('Saint-Malo', 'Pollution normale', '' ,0, 'true')");
 
-
     }
 
 
@@ -62,23 +60,6 @@ public class Database extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME);
         onCreate(db);
-    }
-
-    public Cursor getAllData() {
-        SQLiteDatabase db = this.getWritableDatabase();
-
-        /*ContentValues values = new ContentValues();
-        values.put(COL_1, "3");
-        values.put(COL_2, "Peyriac");
-        values.put(COL_3, "Pollution extrême");
-        values.put(COL_4, "true");
-        values.put(COL_5, "true");
-        long newRowId = db.insert(TABLE_NAME, null, values);
-
-         */
-
-        Cursor res = db.rawQuery("SELECT * FROM " + TABLE_NAME, null);
-        return res;
     }
 
     public Cursor viewData(String query) {

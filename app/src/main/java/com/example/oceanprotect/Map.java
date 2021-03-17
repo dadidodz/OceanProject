@@ -52,10 +52,8 @@ public class Map extends FragmentActivity implements OnMapReadyCallback {
                 List<Address> addressList = null;
                 if (location != null || !location.equals("")) {
                     Geocoder geocoder = new Geocoder(Map.this);
-
                     try {
                         addressList = geocoder.getFromLocationName(location, 1);
-
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
@@ -63,10 +61,7 @@ public class Map extends FragmentActivity implements OnMapReadyCallback {
                     LatLng latLng = new LatLng(address.getLatitude(), address.getLongitude());
                     map.addMarker(new MarkerOptions().position(latLng).title(location));
                     map.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 10));
-
                 }
-
-
                 return false;
             }
 
@@ -90,10 +85,6 @@ public class Map extends FragmentActivity implements OnMapReadyCallback {
             }
         });
 
-    }
-
-    public String getAdresse() {
-        return this.Lieu;
     }
 
     @Override

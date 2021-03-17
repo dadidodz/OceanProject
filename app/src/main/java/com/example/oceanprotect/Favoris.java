@@ -29,15 +29,6 @@ public class Favoris extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.favoris_layout);
 
-        // Récupère le paramètre de l'intent via la clé utilisée
-        //String texte = getIntent().getStringExtra("letexte");
-
-        // modifie le texte du label de l'activité avec cette valeur
-        //TextView textV = (TextView)findViewById(R.id.textView);
-        //textV.setText(texte);
-
-        // Mise en place du traitement sur le bouton ...
-
         this.db = new Database(this);
         this.ListItem = new ArrayList<>();
 
@@ -50,7 +41,6 @@ public class Favoris extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
                 String text = FavorisList.getItemAtPosition(position).toString();
-                Toast.makeText(Favoris.this, ""+text, Toast.LENGTH_SHORT).show();
 
                 Intent intent = new Intent(Favoris.this, InfosPollution.class);
 
@@ -61,8 +51,6 @@ public class Favoris extends AppCompatActivity {
 
                 // Fixe un paramètre sous la forme clé-valeur
                 intent.putExtra("nomlieu",valeurItem);
-
-                //Toast.makeText(MainActivity.this, valeurItem, Toast.LENGTH_SHORT).show();
 
                 startActivity(intent);
             }

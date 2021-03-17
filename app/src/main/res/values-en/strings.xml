@@ -22,6 +22,7 @@
     <string name="texteBoutonRetour">Back</string>
     <string name="checkfav">Favourite</string>
     <string name="listitemville">City : </string>
+    <string name="sources">This information was collected from the website :\n https://fr.climate-data.org/</string>
 
 
 </resources>

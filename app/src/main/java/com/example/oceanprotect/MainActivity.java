@@ -5,27 +5,21 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.RadioButton;
-import android.widget.RadioGroup;
 import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
-import java.util.Collections;
 
 public class MainActivity extends AppCompatActivity implements SearchView.OnQueryTextListener {
 
@@ -48,21 +42,12 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
-        //this.btnviewAll = (Button) findViewById(R.id.buttonviewtable);
         this.myDb = new Database(this);
-
-        //viewAll();
-
-        //TextView Lieu = (TextView) findViewById(R.id.Lieu);
-
-
-        this.textV = (TextView)findViewById(R.id.textView4);
+        this.textV = (TextView)findViewById(R.id.textnbfavoris);
         this.textV.setText(String.valueOf(myDb.countFavori()) + " favoris");
-
         this.ListItem = new ArrayList<>();
-        Cursor cursor = myDb.viewData("select NAME from ocean_table order by NAME ASC");
 
+        Cursor cursor = myDb.viewData("select NAME from ocean_table order by NAME ASC");
         while (cursor.moveToNext()) {
             this.ListItem.add(cursor.getString(0));
         }
@@ -108,8 +93,6 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
                 // Fixe un paramètre sous la forme clé-valeur
                 intent.putExtra("nomlieu", msg);
 
-                //Toast.makeText(MainActivity.this, valeurItem, Toast.LENGTH_SHORT).show();
-
                 startActivityForResult(intent, 1);
             }
         });
@@ -117,42 +100,6 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
 
 
     }
-/*
-    public void RetourAdresse() {
-
-
-
-    public void viewAll() {
-        btnviewAll.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Cursor res = myDb.getAllData();
-                        if(res.getCount() == 0) {
-                            // voir les messages
-                            showMessage("Error", "Aucune data");
-                            return;
-                        }
-
-                        StringBuffer buffer = new StringBuffer();
-                        while(res.moveToNext()) {
-                            buffer.append("ID :" + res.getString(0) + "\n");
-                            buffer.append("Name :" + res.getString(1) + "\n");
-                            buffer.append("Description :" + res.getString(2) + "\n");
-                            buffer.append("Information :" + res.getString(3) + "\n");
-                        }
-
-                        //Voir toutes les datas
-                        showMessage("Data", buffer.toString());
-
-                    }
-                }
-        );
-    }
-
- */
-
-
 
     public void showMessage (String title, String message) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);

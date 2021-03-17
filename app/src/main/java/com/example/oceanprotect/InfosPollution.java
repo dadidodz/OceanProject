@@ -30,8 +30,6 @@ public class InfosPollution extends AppCompatActivity  {
         // modifie le texte du label de l'activite avec cette valeur
         TextView nomville = (TextView)findViewById(R.id.nomlieu);
         nomville.setText(viewDataName(nomlieu));
-        //textV.setText(nomlieu);
-
 
         TextView info = (TextView) findViewById(R.id.information);
         info.setText(viewDataInformation(nomlieu));
@@ -39,24 +37,11 @@ public class InfosPollution extends AppCompatActivity  {
         TextView pollution = (TextView) findViewById(R.id.pollution);
         pollution.setText(viewDataDescription(nomlieu));
 
-
-
-
-
-        //TextView textV2 = (TextView)findViewById(R.id.textView2);
-        //textV2.setText(estFavori(nomlieu));
-
         CheckBox chk = (CheckBox) findViewById(R.id.chk1);
-
 
         if(estFavori(nomlieu) == 1){
             chk.setChecked(true);
         }
-
-
-
-
-
         // Mise en place du traitement sur le bouton ...
         Button boutonRetour = (Button)findViewById(R.id.buttonrtn);
 
@@ -70,18 +55,14 @@ public class InfosPollution extends AppCompatActivity  {
             }
         });
 
-
         chk.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if(isChecked)  {
-                    //Cursor cursor = db.viewData("select NAME, DESCRIPTION from ocean_table WHERE NAME='" + texte +"'");
                     db.ajouterFavori(nomlieu);
-
                     Toast.makeText(InfosPollution.this, nomlieu + " ajoutee aux favoris", Toast.LENGTH_SHORT).show();
                 } else {
                     db.supprimerFavori(nomlieu);
-
                     Toast.makeText(InfosPollution.this, nomlieu + " supprimee des favoris", Toast.LENGTH_SHORT).show();
                 }
             }
@@ -144,7 +125,7 @@ public class InfosPollution extends AppCompatActivity  {
         Cursor cursor = db.viewData("select FAVORIS from ocean_table WHERE NAME='" + texte +"'");
 
         if (cursor.getCount() == 0) {
-            //cursor.close();
+            cursor.close();
             Toast.makeText(this, "Aucune Donnees", Toast.LENGTH_SHORT).show();
         } else {
             while (cursor.moveToNext()) {
@@ -152,15 +133,8 @@ public class InfosPollution extends AppCompatActivity  {
             }
 
         }
-        //cursor.close();
+        cursor.close();
         return retour;
     }
-
-
-
-
-
-
-
 
 }
