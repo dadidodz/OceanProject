@@ -37,22 +37,6 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
     private Button btnviewAll;
     private ArrayList<String> ListItem;
     private Map m;
-    TextView Lieu = (TextView) findViewById(R.id.Lieu);
-
-
-    public void trierOrdreAlphaNomsLieuxList() {
-        int tailletableau=ListItem.size();
-        String tmp;
-        for (int i=0; i < tailletableau; i++) {
-            for (int j=i+1; j < tailletableau; j++) {
-                if (ListItem.get(i).compareTo(ListItem.get(j)) > 0) {
-                    tmp = ListItem.get(i);
-                    ListItem.set(i,ListItem.get(j));
-                    ListItem.set(j,tmp);
-                }
-            }
-        }
-    }
 
     public void onRadioButtonClicked(View view) {
         // Is the button now checked?
@@ -62,17 +46,17 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         switch(view.getId()) {
             case R.id.radioButtonTout:
                 if (checked){
-                    viewDataFactoriser("select NAME from ocean_table");
+                    viewDataFactoriser("select NAME from ocean_table order by NAME ASC");
                 }
                 break;
             case R.id.radioButtonMer:
                 if (checked) {
-                    viewDataFactoriser("select NAME from ocean_table where mer='true'");
+                    viewDataFactoriser("select NAME from ocean_table where MEROCEAN='true' order by NAME ASC");
                 }
                 break;
             case R.id.radioButtonOcean:
                 if (checked) {
-                    viewDataFactoriser("select NAME from ocean_table where mer='false'");
+                    viewDataFactoriser("select NAME from ocean_table where MEROCEAN='false' order by NAME ASC");
                 }
                 break;
         }
@@ -89,7 +73,6 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
             while (cursor.moveToNext()) {
                 this.ListItem.add(cursor.getString(0));
             }
-            trierOrdreAlphaNomsLieuxList();
             for (int i = 0; i < this.ListItem.size(); i++) {
                 NomsLieux nomsLieux = new NomsLieux(this.ListItem.get(i));
                 // Binds all strings into an array
@@ -109,10 +92,11 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
 
         viewAll();
 
+        TextView Lieu = (TextView) findViewById(R.id.Lieu);
         Lieu.setText("ok");
 
         ListItem = new ArrayList<>();
-        Cursor cursor = myDb.viewData("select NAME from ocean_table");
+        Cursor cursor = myDb.viewData("select NAME from ocean_table order by NAME ASC");
 
         while (cursor.moveToNext()) {
             this.ListItem.add(cursor.getString(0));

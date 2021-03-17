@@ -1,5 +1,6 @@
 package com.example.oceanprotect;
 
+import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.view.View;
@@ -47,8 +48,25 @@ public class Favoris extends AppCompatActivity {
         FavorisList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                String text = FavorisList.getItemAtPosition(1).toString();
+
+                String text = FavorisList.getItemAtPosition(position).toString();
                 Toast.makeText(Favoris.this, ""+text, Toast.LENGTH_SHORT).show();
+
+
+
+                Intent intent = new Intent(Favoris.this, InfosPollution.class);
+
+                // Récupère la valeur de l'item à la position sur laquelle on a cliqué
+                String valeurItem = (String) parent.getItemAtPosition(position);
+
+                //String msg = valeurItem.getNomsLieux();
+
+                // Fixe un paramètre sous la forme clé-valeur
+                intent.putExtra("letexte",valeurItem);
+
+                //Toast.makeText(MainActivity.this, valeurItem, Toast.LENGTH_SHORT).show();
+
+                startActivity(intent);
             }
         });
 

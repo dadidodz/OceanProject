@@ -30,7 +30,32 @@ public class Database extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL("create table " + TABLE_NAME + " (ID INTEGER PRIMARY KEY AUTOINCREMENT, NAME TEXT, DESCRIPTION TEXT, FAVORIS BOOLEAN, MEROCEAN BOOLEAN) ");
+        db.execSQL("CREATE TABLE " + TABLE_NAME + " (ID INTEGER PRIMARY KEY AUTOINCREMENT, NAME TEXT, DESCRIPTION TEXT, FAVORIS BOOLEAN, MEROCEAN BOOLEAN) ");
+
+        db.execSQL("INSERT INTO " + TABLE_NAME+ "(NAME, DESCRIPTION, FAVORIS, MEROCEAN ) VALUES ('Peyriac', 'Pollution extrême','true', 'true')");
+        db.execSQL("INSERT INTO " + TABLE_NAME+ "(NAME, DESCRIPTION, FAVORIS, MEROCEAN ) VALUES ('Bayonne', 'Pollution forte','true', 'false')");
+        db.execSQL("INSERT INTO " + TABLE_NAME+ "(NAME, DESCRIPTION, FAVORIS, MEROCEAN ) VALUES ('La Rochelle', 'Pollution normale','false', 'false')");
+        db.execSQL("INSERT INTO " + TABLE_NAME+ "(NAME, DESCRIPTION, FAVORIS, MEROCEAN ) VALUES ('Lorient', 'Pollution basse','true', 'false')");
+        db.execSQL("INSERT INTO " + TABLE_NAME+ "(NAME, DESCRIPTION, FAVORIS, MEROCEAN ) VALUES ('Biarritz', 'Pollution forte','false', 'false')");
+        db.execSQL("INSERT INTO " + TABLE_NAME+ "(NAME, DESCRIPTION, FAVORIS, MEROCEAN ) VALUES ('Brest', 'Pollution normale','false', 'false')");
+        db.execSQL("INSERT INTO " + TABLE_NAME+ "(NAME, DESCRIPTION, FAVORIS, MEROCEAN ) VALUES ('Anglet', 'Pollution basse','false', 'false')");
+        db.execSQL("INSERT INTO " + TABLE_NAME+ "(NAME, DESCRIPTION, FAVORIS, MEROCEAN ) VALUES ('Saint-Nazaire', 'Pollution normale','false', 'false')");
+        db.execSQL("INSERT INTO " + TABLE_NAME+ "(NAME, DESCRIPTION, FAVORIS, MEROCEAN ) VALUES ('Vannes', 'Pollution basse','false', 'false')");
+        db.execSQL("INSERT INTO " + TABLE_NAME+ "(NAME, DESCRIPTION, FAVORIS, MEROCEAN ) VALUES ('Rochefort', 'Pollution basse','false', 'false')");
+        db.execSQL("INSERT INTO " + TABLE_NAME+ "(NAME, DESCRIPTION, FAVORIS, MEROCEAN ) VALUES ('Lanester', 'Pollution normale','false', 'false')");
+        db.execSQL("INSERT INTO " + TABLE_NAME+ "(NAME, DESCRIPTION, FAVORIS, MEROCEAN ) VALUES ('Cassis', 'Pollution normale','false', 'true')");
+        db.execSQL("INSERT INTO " + TABLE_NAME+ "(NAME, DESCRIPTION, FAVORIS, MEROCEAN ) VALUES ('Honfleur', 'Pollution forte','false', 'true')");
+        db.execSQL("INSERT INTO " + TABLE_NAME+ "(NAME, DESCRIPTION, FAVORIS, MEROCEAN ) VALUES ('Villefranche-sur-mer', 'Pollution forte','true', 'true')");
+        db.execSQL("INSERT INTO " + TABLE_NAME+ "(NAME, DESCRIPTION, FAVORIS, MEROCEAN ) VALUES ('Bonifacio', 'Pollution normale','false', 'true')");
+        db.execSQL("INSERT INTO " + TABLE_NAME+ "(NAME, DESCRIPTION, FAVORIS, MEROCEAN ) VALUES ('Collioure', 'Pollution normale','true', 'true')");
+        db.execSQL("INSERT INTO " + TABLE_NAME+ "(NAME, DESCRIPTION, FAVORIS, MEROCEAN ) VALUES ('Camaret-sur-mer', 'Pollution normale','false', 'true')");
+        db.execSQL("INSERT INTO " + TABLE_NAME+ "(NAME, DESCRIPTION, FAVORIS, MEROCEAN ) VALUES ('Saint-Jean-de-Luz', 'Pollution normale','false', 'true')");
+        db.execSQL("INSERT INTO " + TABLE_NAME+ "(NAME, DESCRIPTION, FAVORIS, MEROCEAN ) VALUES ('Etretat', 'Pollution normale','true', 'true')");
+        db.execSQL("INSERT INTO " + TABLE_NAME+ "(NAME, DESCRIPTION, FAVORIS, MEROCEAN ) VALUES ('Saint-Malo', 'Pollution normale','true', 'true')");
+
+
+
+
     }
 
 
@@ -43,15 +68,20 @@ public class Database extends SQLiteOpenHelper {
     public Cursor getAllData() {
         SQLiteDatabase db = this.getWritableDatabase();
 
-    ContentValues values = new ContentValues();
-
-        values.put(COL_1, "4");
+        /*ContentValues values = new ContentValues();
+        values.put(COL_1, "3");
         values.put(COL_2, "Peyriac");
         values.put(COL_3, "Pollution extrême");
         values.put(COL_4, "true");
         values.put(COL_5, "true");
-
         long newRowId = db.insert(TABLE_NAME, null, values);
+
+         */
+
+
+
+
+
 
         Cursor res = db.rawQuery("SELECT * FROM " + TABLE_NAME, null);
         return res;
