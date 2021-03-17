@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">OceanProtect</string>
+    <string name="menuinfo">Ajout</string>
+    <string name="quitmenu">Quitter</string>
+    <string name="titleFenetre">Mes Favoris</string>
+    <string name="boutonrtn">Retour</string>
+    <string name="texteFavoris">Retrouvez ici tous vos favoris pour y accéder plus rapidement !</string>
+    <string name="titremap" translatable="false">AIzaSyB_qsP8AOP_P0MdlPz-48TDaJYjTP3vbjo</string>
+    <string name="infosmenu">Informations</string>
+    <string name="radbtntout">Tout</string>
+    <string name="radbtnmer">Mer</string>
+    <string name="radbtnocean">Océan</string>
+    <string name="btngmap">Google Maps</string>
+    <string name="btntable">Voir la table</string>
+    <string name="titremsginfos">Informations sur l\'application</string>
+    <string name="msginfos">    Cette application a été développée par Jean Guiraud et Dorian Blatière dans le cadre d\'un projet universitaire visant
+        à créer une application liée à l\'éco-responsabilité.\n\nElle vous permet de trouver différentes informations sur la pollution des plages, selon une liste des villes du littoral français donnée.</string>
+    <string name="texteMain">En utilisant Google Maps, les filtres ou bien la barre de recherche, trouvez la ville du littoral français qui vous intéresse pour accéder à ses informations de pollution !</string>
+    <string name="titleInfosPollution">Informations pollution</string>
+    <string name="texteBoutonRetour">Retour</string>
+</resources>

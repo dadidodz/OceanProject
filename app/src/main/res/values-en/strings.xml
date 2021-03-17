@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">OceanProtect</string>
+    <string name="menuinfo">Add</string>
+    <string name="quitmenu">Quit</string>
+    <string name="titleFenetre">My Favourites</string>
+    <string name="boutonrtn">Back</string>
+    <string name="texteFavoris">Find all your favourites here to access them more quickly !</string>
+    <string name="titremap" translatable="false">AIzaSyB_qsP8AOP_P0MdlPz-48TDaJYjTP3vbjo</string>
+    <string name="infosmenu">Information</string>
+    <string name="radbtntout">All</string>
+    <string name="radbtnmer">Sea</string>
+    <string name="radbtnocean">Ocean</string>
+    <string name="btngmap">Google Maps</string>
+    <string name="btntable">See the table</string>
+    <string name="titremsginfos">Information on the application</string>
+    <string name="msginfos"> This application was developed by Jean Guiraud and Dorian Blatière as part of a university project to create an application related to eco-responsibility.
+     to create an application related to eco-responsibility. It allows you to find different information on beach pollution, according to a list of French coastal cities.</string>
+    <string name="texteMain">Using Google Maps, the filters or the search bar, find the French coastal city you are interested in to access its pollution information !</string>
+    <string name="titleInfosPollution">Pollution information</string>
+    <string name="texteBoutonRetour">Back</string>
+
+</resources>
