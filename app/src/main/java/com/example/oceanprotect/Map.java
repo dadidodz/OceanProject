@@ -1,8 +1,10 @@
 package com.example.oceanprotect;
 
+import android.content.Intent;
 import android.location.Address;
 import android.location.Geocoder;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.SearchView;
@@ -45,24 +47,14 @@ public class Map extends FragmentActivity implements OnMapReadyCallback {
                 String location = searchView.getQuery().toString();
                 Lieu = location;
 
+                Toast.makeText(Map.this, Lieu, Toast.LENGTH_LONG).show();
+
                 List<Address> addressList = null;
                 if (location != null || !location.equals("")) {
                     Geocoder geocoder = new Geocoder(Map.this);
 
                     try {
                         addressList = geocoder.getFromLocationName(location, 1);
-
-                        String addresse = addressList.get(0).getAddressLine(0);
-                        String city = addressList.get(0).getAddressLine(0);
-                        String country = addressList.get(0).getAddressLine(0);
-                        if(addresse==null)
-                            addresse="";
-                        if(city==null)
-                            city="";
-                        if(country==null)
-                            country="";
-
-                        Toast.makeText(Map.this, addresse + "  " + city + " " + country, Toast.LENGTH_LONG).show();
 
                     } catch (IOException e) {
                         e.printStackTrace();
@@ -71,7 +63,9 @@ public class Map extends FragmentActivity implements OnMapReadyCallback {
                     LatLng latLng = new LatLng(address.getLatitude(), address.getLongitude());
                     map.addMarker(new MarkerOptions().position(latLng).title(location));
                     map.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 10));
+
                 }
+
 
                 return false;
             }
@@ -84,10 +78,22 @@ public class Map extends FragmentActivity implements OnMapReadyCallback {
 
         mapFragment.getMapAsync(this);
 
+        Intent intent = getIntent();
+        SearchView searchViewPlace = findViewById(R.id.sv_location);
+        searchViewPlace.setOnSearchClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent resultIntent = new Intent();
+                resultIntent.putExtra("result", Lieu);
+                setResult(RESULT_OK, resultIntent);
+                finish();
+            }
+        });
+
     }
 
     public String getAdresse() {
-        return Lieu;
+        return this.Lieu;
     }
 
     @Override

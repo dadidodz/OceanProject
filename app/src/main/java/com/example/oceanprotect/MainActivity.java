@@ -37,6 +37,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
     private Button btnviewAll;
     private ArrayList<String> ListItem;
     private Map m;
+    private TextView result;
 
     public void onRadioButtonClicked(View view) {
         // Is the button now checked?
@@ -87,13 +88,14 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        result = findViewById(R.id.Lieu);
+
         this.btnviewAll = (Button) findViewById(R.id.buttonviewtable);
         this.myDb = new Database(this);
 
         //viewAll();
 
         TextView Lieu = (TextView) findViewById(R.id.Lieu);
-        Lieu.setText("ok");
 
         ListItem = new ArrayList<>();
         Cursor cursor = myDb.viewData("select NAME from ocean_table order by NAME ASC");
@@ -152,40 +154,8 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
     }
 /*
     public void RetourAdresse() {
-        if (m.getAdresse() == null) {
-            Lieu.setText("Rechercher sur la map");
-        } else {
-            Lieu.setText(m.getAdresse());
-        }
-    }
+
 */
-    public void viewAll() {
-        btnviewAll.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Cursor res = myDb.getAllData();
-                        if(res.getCount() == 0) {
-                            // voir les messages
-                            showMessage("Error", "Aucune data");
-                            return;
-                        }
-
-                        StringBuffer buffer = new StringBuffer();
-                        while(res.moveToNext()) {
-                            buffer.append("ID :" + res.getString(0) + "\n");
-                            buffer.append("Name :" + res.getString(1) + "\n");
-                            buffer.append("Description :" + res.getString(2) + "\n");
-                            buffer.append("Information :" + res.getString(3) + "\n");
-                        }
-
-                        //Voir toutes les datas
-                        showMessage("Data", buffer.toString());
-
-                    }
-                }
-        );
-    }
 
     public void showMessage (String title, String message) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -243,12 +213,17 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         return super.onOptionsItemSelected(item);
     }
 
-
-
-
-
-
-
-
-
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1) {
+            if (resultCode == RESULT_OK) {
+                String resultat = data.getStringExtra("result");
+                result.setText("" + resultat);
+            }
+            if (resultCode == RESULT_CANCELED) {
+                result.setText("Rechercher sur google map");
+            }
+        }
+    }
 }
