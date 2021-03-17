@@ -16,7 +16,7 @@
     <string name="btntable">See the table</string>
     <string name="titremsginfos">Information on the application</string>
     <string name="msginfos"> This application was developed by Jean Guiraud and Dorian Blatière as part of a university project to create an application related to eco-responsibility.
-     to create an application related to eco-responsibility. \n\nIt allows you to find different information on beach pollution, according to a list of French coastal cities.</string>
+     \n\nIt allows you to find different information on beach pollution, according to a list of French coastal cities.</string>
     <string name="texteMain">Using Google Maps, the filters or the search bar, find the French coastal city you are interested in to access its pollution information !</string>
     <string name="titleInfosPollution">Pollution information</string>
     <string name="texteBoutonRetour">Back</string>

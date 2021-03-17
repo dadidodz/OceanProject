@@ -1,11 +1,9 @@
 package com.example.oceanprotect;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
@@ -30,14 +28,16 @@ public class InfosPollution extends AppCompatActivity  {
         String nomlieu = getIntent().getStringExtra("nomlieu");
 
         // modifie le texte du label de l'activite avec cette valeur
-        TextView textV = (TextView)findViewById(R.id.textView);
-        textV.setText(viewData(nomlieu));
+        TextView nomville = (TextView)findViewById(R.id.nomlieu);
+        nomville.setText(viewDataName(nomlieu));
         //textV.setText(nomlieu);
 
 
         TextView info = (TextView) findViewById(R.id.information);
         info.setText(viewDataInformation(nomlieu));
 
+        TextView pollution = (TextView) findViewById(R.id.pollution);
+        pollution.setText(viewDataDescription(nomlieu));
 
 
 
@@ -88,20 +88,20 @@ public class InfosPollution extends AppCompatActivity  {
         });
     }
 
-   private String viewData(String texte) {
+   private String viewDataName(String texte) {
         String retour="";
-        Cursor cursor = db.viewData("select NAME, DESCRIPTION from ocean_table WHERE NAME='" + texte +"'");
+        Cursor cursor = db.viewData("select NAME from ocean_table WHERE NAME='" + texte +"'");
 
         if (cursor.getCount() == 0) {
             Toast.makeText(this, "Aucune Donnees", Toast.LENGTH_SHORT).show();
-            //cursor.close();
+            cursor.close();
         } else {
             while (cursor.moveToNext()) {
-                retour = cursor.getString(0) + "\n" + cursor.getString(1);
+                retour = cursor.getString(0);
             }
 
         }
-       //cursor.close();
+       cursor.close();
        return retour;
     }
 
@@ -116,6 +116,23 @@ public class InfosPollution extends AppCompatActivity  {
             while (cursor.moveToNext()) {
                 retour = cursor.getString(0);
             }
+        }
+        cursor.close();
+        return retour;
+    }
+
+    private String viewDataDescription(String texte) {
+        String retour="";
+        Cursor cursor = db.viewData("select DESCRIPTION from ocean_table WHERE NAME='" + texte +"'");
+
+        if (cursor.getCount() == 0) {
+            Toast.makeText(this, "Aucune Donnees", Toast.LENGTH_SHORT).show();
+            cursor.close();
+        } else {
+            while (cursor.moveToNext()) {
+                retour = cursor.getString(0);
+            }
+
         }
         cursor.close();
         return retour;
